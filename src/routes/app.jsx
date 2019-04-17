@@ -1,13 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import './style.scss'
 
 import Aside from '../components/aside'
 import Header from '../components/header'
-import Footer from '../components/footer'
 import { Layout, Breadcrumb, message } from 'antd'
 const { Content } = Layout
-import { getParents, deepFindPath } from '../utils/deepFind.js'
+import { getMenuPathInfos, findMenuPathIds } from '../utils/menuHandles'
 import { connect } from 'react-redux'
 import appConfig from '../../appConfig'
 import Tool from '../hoc/tool'
@@ -51,17 +49,12 @@ class App extends React.PureComponent {
   // 更新面包屑
   async updateBreadcrumb(path) {
     const { props } = this
-    const paths = deepFindPath(path, this.props.index.menus)
-    const breadcrumb = getParents(paths, this.props.index.menus)
-    // await props.$main.updateBreadcrumb({
-    //   breadcrumb
-    // })
+    const ids = findMenuPathIds(path, this.props.index.menus)
+    const breadcrumb = getMenuPathInfos(ids, this.props.index.menus)
 
     props.dispatch({
       type: 'index/set',
-      payload: {
-        breadcrumb
-      }
+      payload: { breadcrumb }
     })
   }
 
@@ -90,9 +83,9 @@ class App extends React.PureComponent {
     // 获取登录权限和资源数据，获取资源数据更新menuList，放在store中
     await this.props.dispatch({
       type: 'index/fetchSystemMenu',
-      payload: { syscode: appConfig.prodPath }
+      payload: { syscode: appConfig.syscode }
     })
-    console.log('fetchMenu', this.props.index)
+
     const menu = this.props.index.menus
     // 如果菜单长度大于0,并且当前path为/,则跳转至菜单第一个url
     if (menu.length > 0 && this.props.history.location.pathname === '/') {
@@ -104,12 +97,37 @@ class App extends React.PureComponent {
     this.updateBreadcrumb(path)
   }
 
+  go = i => () => {
+    this.props.history.go(i)
+  }
   render(props) {
-    console.log(1111, this)
     const { menus, breadcrumb } = this.props.index
     const { state } = this
+    const len = breadcrumb && breadcrumb.length
+    const renderBradcrumb = e => {
+      return (
+        <Breadcrumb>
+          <Breadcrumb.Item>首页</Breadcrumb.Item>
+          {breadcrumb &&
+            breadcrumb.map((item, index) => {
+              return (
+                <Breadcrumb.Item key={item.id}>
+                  {len - 1 === index || !item.url ? (
+                    <span>{item.name}</span>
+                  ) : (
+                    <a onClick={this.go(index + 1 - len)} herf="javascript;;">
+                      {item.name}
+                    </a>
+                  )}
+                </Breadcrumb.Item>
+              )
+            })}
+        </Breadcrumb>
+      )
+    }
+
     return (
-      <Layout className="page">
+      <Layout className="auto-wrapper">
         <Aside
           list={menus}
           onMenuHandle={this.onMenuHandle}
@@ -118,37 +136,11 @@ class App extends React.PureComponent {
           defaultMenu={props.location.pathname}
         />
         <Layout>
-          <Header collapsed={state.collapsed} onCollapse={::this.onCollapse} />
+          <Header collapsed={state.collapsed} onCollapse={this.onCollapse} />
 
-          <Content className="content">
-            <div className="breadcrumb">
-              <Breadcrumb>
-                <Breadcrumb.Item>首页</Breadcrumb.Item>
-                {breadcrumb &&
-                  breadcrumb.map((item, index) => {
-                    if (index === breadcrumb.length - 1) {
-                      return (
-                        <Breadcrumb.Item key={item.id}>
-                          {item.name}
-                        </Breadcrumb.Item>
-                      )
-                    }
-                    return (
-                      <Breadcrumb.Item key={item.id}>
-                        {item.path ? (
-                          <Link to={item.url}>{item.name}</Link>
-                        ) : (
-                          item.title
-                        )}
-                      </Breadcrumb.Item>
-                    )
-                  })}
-              </Breadcrumb>
-            </div>
-            {this.props.children}
-          </Content>
+          <div className="auto-breadcrumb">{renderBradcrumb()}</div>
 
-          <Footer />
+          <Content className="auto-mainbody">{this.props.children}</Content>
         </Layout>
       </Layout>
     )

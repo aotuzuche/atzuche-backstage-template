@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react'
-import './style.scss'
-import { connect } from 'react-redux'
+import './style'
+import appConfig from '../../../appConfig'
+import React from 'react'
 import { Layout, Menu, Icon, message } from 'antd'
 
 const { Sider } = Layout
 const { SubMenu } = Menu
 
-import { deepFind, deepFindPath, getParents } from 'src/utils/deepFind'
+import { findMenuInfo, findMenuPathIds } from '../../utils/menuHandles'
 
-class AsideView extends PureComponent {
+class AsideView extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -16,10 +16,6 @@ class AsideView extends PureComponent {
       selectedKeys: [],
       openKeys: []
     }
-  }
-
-  UNSAFE_componentWillMount() {
-    this.updateBreadcrumb()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -34,47 +30,35 @@ class AsideView extends PureComponent {
       })
     }
   }
-
-  componentDidCatch(error) {
-    console.error(error)
+  isFalse(icon) {
+    return ['false', false, 0, '0'].includes(icon)
   }
-
   // 设置默认选中状态
   setMenuKey() {
     const { props } = this
-    const currentMenu = deepFind(props.defaultMenu, props.list, 'url')
-    let selectedKeys = currentMenu ? [].concat(String(currentMenu.id)) : []
-    // 如果是子菜单，那么父菜单需要打开
-    if (currentMenu && currentMenu.pid) {
-      // 插入选中key
-      selectedKeys.unshift(String(currentMenu.pid))
-      this.setState({
-        openKeys: [].concat(currentMenu.pid.toString()),
-        selectedKeys
+    const currentMenu = findMenuInfo(props.defaultMenu, props.list, 'url')
+
+    let selectedKeys = props.list[0] ? [props.list[0].id.toString()] : []
+    let openKeys = []
+
+    // 如果找到当前菜单，定位当前菜单，然后展开相关的菜单
+    if (currentMenu) {
+      let url = currentMenu.url
+      const ids = findMenuPathIds(url, props.list)
+      let find = false
+      openKeys = ids.reverse().map(id => {
+        const menu = findMenuInfo(id, props.list)
+        if (!find && !this.isFalse(menu.icon)) {
+          selectedKeys = [menu.id.toString()]
+          find = true
+        }
+        return id.toString()
       })
-      return
     }
-    // 临时解决
+
     this.setState({
-      selectedKeys:
-        selectedKeys.length > 0 ? selectedKeys : this.state.selectedKeys
-    })
-  }
-
-  // 更新面包屑
-  async updateBreadcrumb() {
-    const { props } = this
-    const paths = deepFindPath(props.defaultMenu, props.list)
-    const breadcrumb = getParents(paths, props.list)
-
-    // await props.$main.updateBreadcrumb({
-    //   breadcrumb
-    // })
-    this.props.dispatch({
-      type: 'index/set',
-      payload: {
-        breadcrumb
-      }
+      openKeys: openKeys,
+      selectedKeys: selectedKeys
     })
   }
 
@@ -85,14 +69,20 @@ class AsideView extends PureComponent {
     }
     return obj.map(item => {
       // 判断是否有子菜单
-      /* if(item.children instanceof Array && item.showSubMenu){ */
+      let hasSub = false
       if (item.children instanceof Array) {
+        // 如果所有的子菜单都是隐藏形式的话
+        // 就认为该菜单没有子菜单
+        hasSub = item.children.some(res => !this.isFalse(res.icon))
+      }
+
+      if (hasSub) {
         return (
           <SubMenu
             key={item.id}
             title={
               <span>
-                {item.icon ? <Icon type={item.icon} /> : null}
+                {item.icon ? <Icon type={item.icon} /> : <Icon type="folder" />}
                 <span>{item.name}</span>
               </span>
             }
@@ -102,9 +92,14 @@ class AsideView extends PureComponent {
         )
       }
 
+      // 不显示隐藏形式的菜单
+      if (this.isFalse(item.icon)) {
+        return null
+      }
+
       return (
         <Menu.Item key={item.id}>
-          {item.icon ? <Icon type={item.icon} /> : null}
+          {item.icon ? <Icon type={item.icon} /> : <Icon type="file" />}
           <span>{item.name}</span>
         </Menu.Item>
       )
@@ -114,7 +109,7 @@ class AsideView extends PureComponent {
   // 菜单点击事件
   onMenuHandle = e => {
     try {
-      const _current = deepFind(e.key, this.props.list)
+      const _current = findMenuInfo(e.key, this.props.list)
       if (_current) {
         this.props.onMenuHandle(_current.url)
       }
@@ -141,27 +136,27 @@ class AsideView extends PureComponent {
     const { props } = this
     return (
       <Sider
-        className="sider"
+        className="auto-sider"
         width="256"
         collapsedWidth="80"
         breakpoint="xl"
         collapsed={props.collapsed}
         onCollapse={this.onCollapse}
       >
-        <div className="logo">
+        <div className="auto-logo">
           <img
-            src="https://carphoto.aotuzuche.com/web/images/webSystem/icon_logo.png"
+            src="//carphoto.aotuzuche.com/web/images/webSystem/icon_logo.png"
             alt="logo"
           />
-          <h1>凹凸租车管理后台</h1>
+          <h1>{appConfig.title}</h1>
         </div>
         <Menu
           openKeys={this.state.openKeys}
           selectedKeys={this.state.selectedKeys}
           mode="inline"
           theme="dark"
-          onClick={::this.onMenuHandle}
-          onSelect={::this.onMenuSelect}
+          onClick={this.onMenuHandle}
+          onSelect={this.onMenuSelect}
           onOpenChange={e => {
             this.setState({
               openKeys: e
@@ -175,6 +170,4 @@ class AsideView extends PureComponent {
   }
 }
 
-export default connect(index => ({
-  index
-}))(AsideView)
+export default AsideView

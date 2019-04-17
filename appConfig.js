@@ -11,6 +11,8 @@ module.exports = {
   // 打包的出口目录(默认dist目录)
   prodPath: '<%= prodPath %>',
 
+  syscode: '<%= prodPath %>',
+
   // 本地测试端口
   port: 3880,
 

@@ -1,10 +1,12 @@
 import home from './home'
 import services from '../services'
+import { getTreeFromFlatData } from '../utils/menuHandles'
 
 const index = {
   namespace: 'index',
   state: {
-    menus: null
+    menus: null,
+    breadcrumb: null
   },
   reducers: {
     set(state, { payload }) {
@@ -13,14 +15,21 @@ const index = {
   },
   effects: {
     * fetchSystemMenu({ payload }, { call, put }) {
-      console.log('payload', payload)
       try {
         const systemMenu = yield call(services.fetchSystemMenu, payload)
+
+        const menus = getTreeFromFlatData({
+          flatData: systemMenu.list.map(node => {
+            return { ...node }
+          }),
+          getKey: node => node.id, // resolve a node's key
+          getParentKey: node => node.pid // resolve a node's parent's key
+        })
 
         yield put({
           type: 'set',
           payload: {
-            menus: systemMenu && systemMenu.list ? systemMenu.list : []
+            menus: menus
           }
         })
       } catch (error) {

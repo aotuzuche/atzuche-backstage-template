@@ -35,7 +35,6 @@ http.interceptors.request.use(
 
 http.interceptors.response.use(
   config => {
-    console.log('config', config)
     if (config.data.resCode === '000000') {
       return config.data.data
     }
@@ -54,7 +53,6 @@ http.interceptors.response.use(
     })
   },
   err => {
-    console.log('err', err)
     return Promise.reject({
       code: err.response.data.resCode,
       msg: err.response.data.resMsg,

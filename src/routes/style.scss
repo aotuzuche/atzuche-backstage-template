@@ -1,15 +1,21 @@
-.page {
+.auto-wrapper {
   overflow: hidden;
   position: relative;
 }
 
-.content {
+.auto-mainbody {
+  padding: 24px 24px 24px 24px;
   min-width: 1080px;
-  min-height: auto !important;
+  background: #f2f3f9;
+  .ant-layout {
+    background: #fff;
+    padding: 24px;
+    border-radius: 6px;
+  }
 }
 
-.breadcrumb {
-  padding: 8px 24px;
+.auto-breadcrumb {
+  padding: 15px 0 15px 30px;
   background: #fff;
-  margin-bottom: 24px;
+  border-bottom: 1px solid #f0f0f0;
 }
