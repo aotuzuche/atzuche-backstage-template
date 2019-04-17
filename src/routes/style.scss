@@ -1,0 +1,15 @@
+.page {
+  overflow: hidden;
+  position: relative;
+}
+
+.content {
+  min-width: 1080px;
+  min-height: auto !important;
+}
+
+.breadcrumb {
+  padding: 8px 24px;
+  background: #fff;
+  margin-bottom: 24px;
+}

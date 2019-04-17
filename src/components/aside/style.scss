@@ -1,0 +1,29 @@
+.sider{
+	min-height: 100vh;
+	background-color: #001529;
+	width: 300px;
+	.logo{
+	    height: 64px;
+	    position: relative;
+	    line-height: 64px;
+	    padding-left: 20px;
+	    -webkit-transition: all .3s;
+	    -o-transition: all .3s;
+	    transition: all .3s;
+	    background: #002140;
+	    overflow: hidden;
+	    img{
+    	    display: inline-block;
+		    vertical-align: middle;
+		    height: 36px;
+	    }
+	    h1{
+    	    color: #fff;
+		    display: inline-block;
+		    vertical-align: middle;
+		    font-size: 18px;
+		    margin: 0 0 0 12px;
+		    font-weight: normal;
+	    }
+	}
+}

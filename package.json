@@ -1,0 +1,35 @@
+{
+  "name": "atzuche-backstage-template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:aotuzuche/atzuche-backstage-template.git",
+  "author": "shao <darryshaw@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "prod": "autos build",
+    "dev": "autos dev",
+    "test": "autos build -t",
+    "analyzer": "autos build -t --analyzer",
+    "lint": "autos lint --fix",
+    "format": "prettier --write src/**/*.{js,jsx}"
+  },
+  "dependencies": {
+    "antd": "^3.16.3",
+    "axios": "^0.18.0",
+    "dva-core": "^1.4.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.0.2",
+    "react-router-dom": "^5.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-alloy": "^1.4.2",
+    "eslint-plugin-react": "^7.12.4"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}

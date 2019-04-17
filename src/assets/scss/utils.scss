@@ -1,0 +1,18 @@
+:global(.clear-fix)::after,
+:global(.clear-fix)::before {
+  display : table;
+  content : ''
+  }
+
+:global(.clear-fix)::after {
+  clear : both;
+  }
+
+:global(.f-l) {
+  float: left;
+  }
+
+:global(.f-r) {
+  float: right;
+  }
+
