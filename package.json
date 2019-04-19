@@ -10,9 +10,20 @@
     "dev": "autos dev",
     "test": "autos build -t",
     "analyzer": "autos build -t --analyzer",
-    "lint": "autos lint --fix",
+    "lint": "lint-staged",
     "format": "prettier --write src/**/*.{js,jsx}",
     "auth": "node ./auth.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "antd": "^3.16.3",
@@ -24,16 +35,6 @@
     "react-router-dom": "^5.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-config-alloy": "^1.4.2",
-    "eslint-plugin-react": "^7.12.4",
-    "fs-extra": "^7.0.1",
-    "minimist": "^1.2.0",
-    "yamljs": "^0.3.0",
-    "@babel/polyfill": "^7.4.3",
-    "core-js": "3.0.1",
-    "qs": "^6.7.0",
     "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-proposal-decorators": "^7.4.0",
@@ -53,10 +54,19 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-syntax-import-meta": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/polyfill": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
     "babel-plugin-import": "^1.11.0",
-    "babel-plugin-react-css-modules": "^5.2.4"
+    "babel-plugin-react-css-modules": "^5.2.4",
+    "core-js": "3.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-atzuche": "^0.0.2",
+    "fs-extra": "^7.0.1",
+    "minimist": "^1.2.0",
+    "qs": "^6.7.0",
+    "yamljs": "^0.3.0"
   },
   "browserslist": [
     "> 1%",

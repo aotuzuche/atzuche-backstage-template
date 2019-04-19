@@ -6,6 +6,9 @@ import './style.scss'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
+import moment from 'moment'
+import 'moment/locale/zh-cn'
+moment.locale('zh-cn')
 
 // store
 import store from './store'
