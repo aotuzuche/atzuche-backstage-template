@@ -14,16 +14,16 @@ const index = {
     }
   },
   effects: {
-    * fetchSystemMenu({ payload }, { call, put }) {
+    *fetchSystemMenu({ payload }, { call, put }) {
       try {
         const systemMenu = yield call(services.fetchSystemMenu, payload)
 
         const menus = getTreeFromFlatData({
-          flatData: systemMenu.list.map(node => {
+          flatData: systemMenu.list.map((node) => {
             return { ...node }
           }),
-          getKey: node => node.id, // resolve a node's key
-          getParentKey: node => node.pid // resolve a node's parent's key
+          getKey: (node) => node.id, // resolve a node's key
+          getParentKey: (node) => node.pid // resolve a node's parent's key
         })
 
         yield put({

@@ -1,15 +1,23 @@
 import axios from 'axios'
 import { getToken, clearToken } from './token'
 
+function HttpError(result) {
+  const { resMsg, resCode, data } = result
+  this.msg = resMsg
+  this.name = 'HttpError'
+  this.data = data
+  this.code = resCode
+}
+HttpError.prototype = new Error()
+HttpError.prototype.constructor = HttpError
+
 const config = {
   production: '/apigateway/',
   development: '/proxy/apigateway/',
   test: '/apigateway/'
 }
 
-const baseURL = config[process.env.PACKAGE]
-  ? config[process.env.PACKAGE]
-  : config['development']
+const baseURL = config[process.env.PACKAGE] ? config[process.env.PACKAGE] : config['development']
 
 const http = axios.create({
   baseURL,
@@ -20,7 +28,7 @@ const http = axios.create({
 })
 
 http.interceptors.request.use(
-  config => {
+  (config) => {
     const token = getToken()
     if (token) {
       config.headers.Authorization = token
@@ -28,13 +36,13 @@ http.interceptors.request.use(
 
     return config
   },
-  error => {
+  (error) => {
     return Promise.reject(error)
   }
 )
 
 http.interceptors.response.use(
-  config => {
+  (config) => {
     if (config.data.resCode === '000000') {
       return config.data.data
     }
@@ -46,18 +54,11 @@ http.interceptors.response.use(
       return
     }
 
-    return Promise.reject({
-      code: config.data.resCode,
-      msg: config.data.resMsg,
-      data: null
-    })
+    return Promise.reject(new HttpError(config.data))
   },
-  err => {
-    return Promise.reject({
-      code: err.response.data.resCode,
-      msg: err.response.data.resMsg,
-      data: null
-    })
+  (err) => {
+    console.error(err)
+    Promise.reject(new HttpError('系统错误'))
   }
 )
 

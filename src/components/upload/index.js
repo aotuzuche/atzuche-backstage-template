@@ -39,14 +39,13 @@ class Upload extends React.PureComponent {
       }
 
       return res
-    }
-    catch (e) {
+    } catch (e) {
       message.error('获取上传签名失败')
     }
   }
 
   // 文件变动handler
-  fileChange = async e => {
+  fileChange = async (e) => {
     const [file] = e.target.files
 
     if (!file.type.match('image.*')) {
@@ -66,23 +65,20 @@ class Upload extends React.PureComponent {
         const { host, dir } = sign
         const xhr = new XMLHttpRequest()
 
-        xhr.addEventListener('load', e => {
+        xhr.addEventListener('load', (e) => {
           if (xhr.status === 204) {
             this.props.onChange(dir + filename)
             this.filebtn.value = '' // 重置上传插件的value值，以便于可以重复上传同张同片而不会没有反应
-          }
-          else {
+          } else {
             message.error('上传失败')
           }
         })
         xhr.open('post', host)
         xhr.send(form)
-      }
-      else {
+      } else {
         message.error('获取上传签名失败')
       }
-    }
-    catch (e) {
+    } catch (e) {
       message.error(e.msg || '系统错误')
     }
   }
@@ -100,15 +96,14 @@ class Upload extends React.PureComponent {
     return fileForm
   }
 
-  onDel = e => {
+  onDel = (e) => {
     this.props.onChange('')
   }
 
-  onUpload = e => {
+  onUpload = (e) => {
     if (this.filebtn) {
       this.filebtn.click()
-    }
-    else {
+    } else {
       message.error('上传组件加载失败')
     }
   }
@@ -118,38 +113,29 @@ class Upload extends React.PureComponent {
 
     return (
       <div className={css}>
-        {
-          this.props.thumb !== false ?
-            <div className="auto-imgupload__thumb">
-              {
-                this.props.value ?
-                  <div
-                    className="auto-imgupload__img"
-                    style={{ backgroundImage: `url(${cdn + '/' + this.props.value})` }}
-                  >
-                    <Popconfirm
-                      okText="是"
-                      cancelText="否"
-                      title="确认删除吗？"
-                      onConfirm={this.onDel}
-                    >
-                      <a href="javascript:;">删除</a>
-                    </Popconfirm>
-                    {
-                      this.props.thumbAddon &&
-                      this.props.thumbAddon()
-                    }
-                  </div> :
-                  <p>请上传图片</p>
-              }
-            </div> :
-            null
-        }
+        {this.props.thumb !== false ? (
+          <div className="auto-imgupload__thumb">
+            {this.props.value ? (
+              <div
+                className="auto-imgupload__img"
+                style={{ backgroundImage: `url(${cdn + '/' + this.props.value})` }}
+              >
+                <Popconfirm okText="是" cancelText="否" title="确认删除吗？" onConfirm={this.onDel}>
+                  <a href="javascript:;">删除</a>
+                </Popconfirm>
+                {this.props.thumbAddon && this.props.thumbAddon()}
+              </div>
+            ) : (
+              <p>请上传图片</p>
+            )}
+          </div>
+        ) : null}
         <Button onClick={this.onUpload}>
-          <Icon type="cloud-upload-o" />上传图片
+          <Icon type="cloud-upload-o" />
+          上传图片
         </Button>
         <input
-          ref={e => {
+          ref={(e) => {
             this.filebtn = e
           }}
           className="auto-imgupload__file-button"

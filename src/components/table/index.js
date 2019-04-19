@@ -73,9 +73,7 @@ class AutoTable extends React.Component {
   }
 
   get _search() {
-    return window.location.search
-      ? qs.parse(window.location.search.replace(/^\?/, ''))
-      : {}
+    return window.location.search ? qs.parse(window.location.search.replace(/^\?/, '')) : {}
   }
 
   // loading
@@ -106,35 +104,32 @@ class AutoTable extends React.Component {
       }
     })
 
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.keyword = kw
       this.skip = 1
       this.count = 0
-      await this.fetchData()
-      resolve()
+      resolve(this.fetchData())
     })
   }
 
   // 刷新，外部通过ref调用
   refresh = () => {
-    return new Promise(async (resolve, reject) => {
-      await this.fetchData()
-      resolve()
+    return new Promise((resolve, reject) => {
+      resolve(this.fetchData())
     })
   }
 
   // 翻到指定页面，外部通过ref调用
-  pageTo = num => {
-    return new Promise(async (resolve, reject) => {
+  pageTo = (num) => {
+    return new Promise((resolve, reject) => {
       this.skip = num
       this.count = 0
-      await this.fetchData()
-      resolve()
+      resolve(this.fetchData())
     })
   }
 
   // 请求数据
-  fetchData = async e => {
+  fetchData = async (e) => {
     try {
       this.setState({
         loading: true
@@ -214,7 +209,7 @@ class AutoTable extends React.Component {
   }
 
   // 翻页
-  onChange = e => {
+  onChange = (e) => {
     this.limit = e.pageSize
     this.skip = e.current
     this.fetchData()
@@ -226,7 +221,7 @@ class AutoTable extends React.Component {
     if (this.props.columns && this.props.columns.length) {
       for (let i = 0; i < this.props.columns.length; i++) {
         const it = this.props.columns[i]
-        const data = (it.data || '').split(',').map(res => res.trim())
+        const data = (it.data || '').split(',').map((res) => res.trim())
 
         const item = {
           title: data[0],
@@ -249,7 +244,7 @@ class AutoTable extends React.Component {
         if (it.render) {
           item.render = it.render
         } else {
-          item.render = e => {
+          item.render = (e) => {
             return typeof e !== 'undefined' && e !== null ? e : '-'
           }
         }

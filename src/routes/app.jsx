@@ -59,19 +59,19 @@ class App extends React.PureComponent {
   }
 
   // 菜单点击回调
-  onMenuHandle = path => {
+  onMenuHandle = (path) => {
     this.props.history.push(path)
     this.updateBreadcrumb(path)
   }
 
   // 侧边栏回调
-  onCollapse = e => {
+  onCollapse = (e) => {
     this.setState({
       collapsed: e
     })
   }
 
-  deepMenuUrl = menu => {
+  deepMenuUrl = (menu) => {
     if (menu.children) {
       return this.deepMenuUrl(menu.children[0])
     }
@@ -97,14 +97,14 @@ class App extends React.PureComponent {
     this.updateBreadcrumb(path)
   }
 
-  go = i => () => {
+  go = (i) => () => {
     this.props.history.go(i)
   }
   render(props) {
     const { menus, breadcrumb } = this.props.index
     const { state } = this
     const len = breadcrumb && breadcrumb.length
-    const renderBradcrumb = e => {
+    const renderBradcrumb = (e) => {
       return (
         <Breadcrumb>
           <Breadcrumb.Item>首页</Breadcrumb.Item>

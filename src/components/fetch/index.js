@@ -6,7 +6,6 @@ import qs from 'qs'
 // 放缓存的容器
 const cache = {}
 
-
 /**
  * 用于加载数据
  * api 接口地址，默认get，可改用 post:url的方式切换请求方式
@@ -32,21 +31,20 @@ class Fetch extends React.Component {
     this.startFetch()
   }
 
-  startFetch = e => {
+  startFetch = (e) => {
     const key = this.props.api + '?' + qs.stringify(this.props.data)
 
     if (this.props.cache && cache[key]) {
       this.setState({
         dataSource: cache[key]
       })
-    }
-    else {
+    } else {
       this.fetchData()
     }
   }
 
   // 请求数据
-  fetchData = async e => {
+  fetchData = async (e) => {
     try {
       this.setState({
         loading: true
@@ -71,8 +69,7 @@ class Fetch extends React.Component {
       }
       if (method.toLowerCase() === 'get') {
         request.params = data
-      }
-      else {
+      } else {
         request.data = data
       }
 
@@ -93,11 +90,9 @@ class Fetch extends React.Component {
       if (this.props.afterFetch) {
         this.props.afterFetch(res)
       }
-    }
-    catch (e) {
+    } catch (e) {
       Message.error(e.msg)
-    }
-    finally {
+    } finally {
       this.setState({
         loading: false
       })

@@ -21,15 +21,13 @@ const findMenuInfo = (value, menuTree, key = 'id') => {
   return result
 }
 
-
 // 获取所有父集节点
 const getMenuPathInfos = (ids = [], menuTree) => {
-  const menuPathInfos = ids.map(id => {
+  const menuPathInfos = ids.map((id) => {
     return findMenuInfo(id, menuTree)
   })
   return menuPathInfos
 }
-
 
 // 根据路径从它开始一直找它的父节点，到根节点为止
 // 然后用数组的形式返回所有节点的id
@@ -51,8 +49,7 @@ const findMenuPathIds = (path, menuTree) => {
     if (t.pid) {
       p = t.pid
       menuIds.unshift(p)
-    }
-    else {
+    } else {
       p = null
     }
   }
@@ -71,13 +68,12 @@ const findMenuPathIds = (path, menuTree) => {
  *
  * @return {Object[]} treeData - The flat data represented as a tree
  */
-const getTreeFromFlatData = args => {
-
+const getTreeFromFlatData = (args) => {
   const {
     flatData,
-    getKey = node => node.id,
-    getParentKey = node => node.parentId,
-    rootKey = '0',
+    getKey = (node) => node.id,
+    getParentKey = (node) => node.parentId,
+    rootKey = '0'
   } = args
 
   if (!flatData) {
@@ -85,13 +81,12 @@ const getTreeFromFlatData = args => {
   }
 
   const childrenToParents = {}
-  flatData.forEach(child => {
+  flatData.forEach((child) => {
     const parentKey = getParentKey(child)
 
     if (parentKey in childrenToParents) {
       childrenToParents[parentKey].push(child)
-    }
-    else {
+    } else {
       childrenToParents[parentKey] = [child]
     }
   })
@@ -100,24 +95,19 @@ const getTreeFromFlatData = args => {
     return []
   }
 
-  const trav = parent => {
+  const trav = (parent) => {
     const parentKey = getKey(parent)
     if (parentKey in childrenToParents) {
       return {
         ...parent,
-        children: childrenToParents[parentKey].map(child => trav(child)),
+        children: childrenToParents[parentKey].map((child) => trav(child))
       }
     }
 
     return { ...parent }
   }
 
-  return childrenToParents[rootKey].map(child => trav(child))
+  return childrenToParents[rootKey].map((child) => trav(child))
 }
 
-export {
-  findMenuInfo,
-  getMenuPathInfos,
-  findMenuPathIds,
-  getTreeFromFlatData
-}
+export { findMenuInfo, getMenuPathInfos, findMenuPathIds, getTreeFromFlatData }

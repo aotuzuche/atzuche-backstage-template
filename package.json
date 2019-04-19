@@ -10,7 +10,7 @@
     "dev": "autos dev",
     "test": "autos build -t",
     "analyzer": "autos build -t --analyzer",
-    "lint": "lint-staged",
+    "lint": "eslint --fix ./src --ext .js,.jsx",
     "format": "prettier --write src/**/*.{js,jsx}",
     "auth": "node ./auth.js"
   },

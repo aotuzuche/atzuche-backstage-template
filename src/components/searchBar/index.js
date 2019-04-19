@@ -27,7 +27,7 @@ class AutoSearchBar extends React.Component {
     const columns = props.columns ? props.columns : []
     const fileds = {}
 
-    columns.forEach(res => {
+    columns.forEach((res) => {
       fileds[res.key] = {
         value: res.initialValue
       }
@@ -36,7 +36,10 @@ class AutoSearchBar extends React.Component {
     this.state = {
       down: false,
       loading: false,
-      initialItemCount: props.initialItemCount && ~~props.initialItemCount === props.initialItemCount ? props.initialItemCount : 4,
+      initialItemCount:
+        props.initialItemCount && ~~props.initialItemCount === props.initialItemCount
+          ? props.initialItemCount
+          : 4,
       initialFileds: fileds
     }
   }
@@ -50,9 +53,7 @@ class AutoSearchBar extends React.Component {
 
     // render默认为input输入框
     if (!render) {
-      render = () => (
-        <Input placeholder={`请输入${title}`} />
-      )
+      render = () => <Input placeholder={`请输入${title}`} />
     }
 
     // 初始化值
@@ -66,9 +67,12 @@ class AutoSearchBar extends React.Component {
     // 得到组件，若组件没有会生成不了相应的value，导致一直出不来，所以组件返回null时就渲染一个空div
     const comp = render(getFieldsValue())
 
-    const colSpan = span && ~~span === span ?
-      span :
-      this.props.colSpan && ~~this.props.colSpan === this.props.colSpan ? this.props.colSpan : 6
+    const colSpan =
+      span && ~~span === span
+        ? span
+        : this.props.colSpan && ~~this.props.colSpan === this.props.colSpan
+        ? this.props.colSpan
+        : 6
 
     if (!comp) {
       return null
@@ -78,8 +82,7 @@ class AutoSearchBar extends React.Component {
     if (comp.type && comp.type.name === 'PickerWrapper') {
       if (val && val.initialValue && typeof val.initialValue === 'string') {
         val.initialValue = moment(val.initialValue - 0)
-      }
-      else if (!val) {
+      } else if (!val) {
         val = {
           initialValue: ''
         }
@@ -88,11 +91,7 @@ class AutoSearchBar extends React.Component {
 
     return (
       <Col span={colSpan} key={key}>
-        <Form.Item
-          {...layout}
-          label={title}
-          className={`form-item__${key}`}
-        >
+        <Form.Item {...layout} label={title} className={`form-item__${key}`}>
           {getFieldDecorator(key, val)(comp)}
         </Form.Item>
       </Col>
@@ -113,16 +112,13 @@ class AutoSearchBar extends React.Component {
         if (this.props.onSearch) {
           await this.props.onSearch(values)
         }
-      }
-      catch (e) {
+      } catch (e) {
         if (typeof e === 'string') {
           Message.error(e)
-        }
-        else {
+        } else {
           Message.error(e.msg || e.message)
         }
-      }
-      finally {
+      } finally {
         this.setState({
           loading: false
         })
@@ -130,12 +126,12 @@ class AutoSearchBar extends React.Component {
     })
   }
 
-  onReset = e => {
+  onReset = (e) => {
     this.props.form.setFields(this.state.initialFileds)
     this.props.onReset && this.props.onReset()
   }
 
-  toggleUpDown = e => {
+  toggleUpDown = (e) => {
     this.setState({
       down: !this.state.down
     })
@@ -145,45 +141,28 @@ class AutoSearchBar extends React.Component {
     return (
       <Row gutter={24} className={'auto-search-bar__submit'}>
         <Col span={24}>
-          <Button
-            type="primary"
-            htmlType="submit"
-          >
-            {
-              !this.state.loading ?
-                <Icon type="search" /> : <Icon type="loading" />
-            }
+          <Button type="primary" htmlType="submit">
+            {!this.state.loading ? <Icon type="search" /> : <Icon type="loading" />}
             搜索
           </Button>
-          <Button
-            type="default"
-            onClick={this.onReset}
-            disabled={this.state.loading}
-          >
+          <Button type="default" onClick={this.onReset} disabled={this.state.loading}>
             重置
           </Button>
-          {
-            this.props.addonButton &&
-            this.props.addonButton()
-          }
-          {
-            this.props.columns.length > this.state.initialItemCount &&
+          {this.props.addonButton && this.props.addonButton()}
+          {this.props.columns.length > this.state.initialItemCount && (
             <a
               href="javascript:;"
               className={'auto-search-bar__up-down'}
               onClick={this.toggleUpDown}
             >
-              {
-                this.state.down ? '收起 ' : '展开 '
-              }
-              {
-                this.state.down ?
-                  <Icon type="up" style={{ fontSize: 12 }} /> :
-                  <Icon type="down" style={{ fontSize: 12 }} />
-              }
-
+              {this.state.down ? '收起 ' : '展开 '}
+              {this.state.down ? (
+                <Icon type="up" style={{ fontSize: 12 }} />
+              ) : (
+                <Icon type="down" style={{ fontSize: 12 }} />
+              )}
             </a>
-          }
+          )}
         </Col>
       </Row>
     )
@@ -196,7 +175,7 @@ class AutoSearchBar extends React.Component {
     if (this.props.columns && this.props.columns.length) {
       // 把所有组件的从props中整理出来
       const columns = []
-      this.props.columns.forEach(res => {
+      this.props.columns.forEach((res) => {
         columns.push({ ...res })
       })
 
@@ -233,9 +212,7 @@ class AutoSearchBar extends React.Component {
       <div className={css}>
         <Spin spinning={this.state.loading === true}>
           <Form onSubmit={this.onSubmit}>
-            <Row gutter={24}>
-              {cols}
-            </Row>
+            <Row gutter={24}>{cols}</Row>
             {this.renderSubmit()}
           </Form>
         </Spin>

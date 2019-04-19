@@ -45,7 +45,7 @@ class AutoForm extends React.Component {
   }
 
   // 请求数据
-  fetchData = async e => {
+  fetchData = async (e) => {
     try {
       // 判断参数
       let apiList = this.props.apiList
@@ -76,8 +76,7 @@ class AutoForm extends React.Component {
       }
       if (method.toLowerCase() === 'get') {
         request.params = data
-      }
-      else {
+      } else {
         request.data = data
       }
 
@@ -89,17 +88,17 @@ class AutoForm extends React.Component {
 
       // 按内容需要捆绑form的数据
       const values = {}
-      this.props.columns && this.props.columns.forEach(res => {
-        if (typeof res.value === 'function') {
-          values[res.key] = res.value(this.dataSource)
-        }
-        else {
-          const value = this.dataSource[res.key]
-          if (value !== null && typeof value !== 'undefined') {
-            values[res.key] = value
+      this.props.columns &&
+        this.props.columns.forEach((res) => {
+          if (typeof res.value === 'function') {
+            values[res.key] = res.value(this.dataSource)
+          } else {
+            const value = this.dataSource[res.key]
+            if (value !== null && typeof value !== 'undefined') {
+              values[res.key] = value
+            }
           }
-        }
-      })
+        })
 
       this.keys = values
       this.props.form.setFieldsValue(values)
@@ -108,12 +107,10 @@ class AutoForm extends React.Component {
       if (this.props.afterFetch) {
         this.props.afterFetch(res)
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e)
       Message.error(e.msg)
-    }
-    finally {
+    } finally {
       this.setState({
         loading: false
       })
@@ -121,7 +118,7 @@ class AutoForm extends React.Component {
   }
 
   // 提交
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       try {
@@ -136,25 +133,20 @@ class AutoForm extends React.Component {
           const res = await this.props.checkForm(values, this.dataSource, this.props.newForm)
           if (res) {
             this.asyncSubmit(res)
-          }
-          else {
+          } else {
             this.asyncSubmit(values)
           }
-        }
-        else {
+        } else {
           this.asyncSubmit(values)
         }
-      }
-      catch (e) {
+      } catch (e) {
         console.error(e)
         if (typeof e === 'string') {
           Message.error(e)
-        }
-        else {
+        } else {
           Message.error(e.msg || e.message)
         }
-      }
-      finally {
+      } finally {
         this.setState({
           loading: false
         })
@@ -163,7 +155,7 @@ class AutoForm extends React.Component {
   }
 
   // 提交请求
-  asyncSubmit = async data => {
+  asyncSubmit = async (data) => {
     try {
       this.setState({
         loading: true
@@ -185,8 +177,7 @@ class AutoForm extends React.Component {
       }
       if (method.toLowerCase() === 'get') {
         request.params = data
-      }
-      else {
+      } else {
         request.data = data
       }
 
@@ -200,12 +191,10 @@ class AutoForm extends React.Component {
       if (this.props.afterSubmit) {
         this.props.afterSubmit(res)
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e)
       Message.error(e.msg)
-    }
-    finally {
+    } finally {
       this.setState({
         loading: false
       })
@@ -213,7 +202,7 @@ class AutoForm extends React.Component {
   }
 
   // 返回
-  onBackClick = e => {
+  onBackClick = (e) => {
     window.history.back()
     e.preventDefault()
   }
@@ -227,7 +216,7 @@ class AutoForm extends React.Component {
 
     // render默认为input输入框
     if (!render) {
-      render = e => <Input placeholder={`请输入${title}`} />
+      render = (e) => <Input placeholder={`请输入${title}`} />
     }
 
     // 初始化值
@@ -247,7 +236,7 @@ class AutoForm extends React.Component {
 
     const _layout = {
       labelCol: { ...layout.labelCol },
-      wrapperCol: { ...layout.wrapperCol },
+      wrapperCol: { ...layout.wrapperCol }
     }
 
     if (span) {
@@ -267,7 +256,6 @@ class AutoForm extends React.Component {
     )
   }
 
-
   renderSubmit() {
     const labelSpan = this.props.labelSpan || 6
     const wrapperSpan = this.props.wrapperSpan ? this.props.wrapperSpan : 8
@@ -283,27 +271,12 @@ class AutoForm extends React.Component {
     }
 
     return (
-      <Form.Item
-        {...layout}
-        label={'submit'}
-        className="auto-form__submit-btns"
-      >
-        <Button
-          type="primary"
-          htmlType="submit"
-          size="large"
-        >
-          {
-            !this.state.loading ?
-              <Icon type="save" /> : <Icon type="loading" />
-          }
+      <Form.Item {...layout} label={'submit'} className="auto-form__submit-btns">
+        <Button type="primary" htmlType="submit" size="large">
+          {!this.state.loading ? <Icon type="save" /> : <Icon type="loading" />}
           保存
         </Button>
-        <Button
-          type="default"
-          onClick={this.onBackClick}
-          size="large"
-        >
+        <Button type="default" onClick={this.onBackClick} size="large">
           返回
         </Button>
       </Form.Item>
@@ -334,8 +307,7 @@ class AutoForm extends React.Component {
         let item = null
         if (!it.key && it.render) {
           item = it.render()
-        }
-        else {
+        } else {
           item = this.createItem(it, layout)
         }
         if (item) {
@@ -349,11 +321,17 @@ class AutoForm extends React.Component {
     return (
       <div className={css}>
         <h1 className="auto-form__title">
-          {
-            this.props.newForm ?
-              <span><Icon type="file-add" />&nbsp;&nbsp;新增</span> :
-              <span><Icon type="edit" />&nbsp;&nbsp;编辑</span>
-          }
+          {this.props.newForm ? (
+            <span>
+              <Icon type="file-add" />
+              &nbsp;&nbsp;新增
+            </span>
+          ) : (
+            <span>
+              <Icon type="edit" />
+              &nbsp;&nbsp;编辑
+            </span>
+          )}
         </h1>
         <Spin spinning={this.state.loading}>
           <Row>
