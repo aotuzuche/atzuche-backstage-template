@@ -72,7 +72,7 @@ class App extends React.PureComponent {
   }
 
   deepMenuUrl = (menu) => {
-    if (menu.children) {
+    if (menu.children && menu.children[0].icon !== false && menu.children[0].icon !== 'false') {
       return this.deepMenuUrl(menu.children[0])
     }
     return menu.url
@@ -115,7 +115,12 @@ class App extends React.PureComponent {
                   {len - 1 === index || !item.url ? (
                     <span>{item.name}</span>
                   ) : (
-                    <a onClick={this.go(index + 1 - len)} herf="javascript;;">
+                    <a
+                      onClick={() => {
+                        this.props.history.push(item.url)
+                      }}
+                      herf="javascript;;"
+                    >
                       {item.name}
                     </a>
                   )}

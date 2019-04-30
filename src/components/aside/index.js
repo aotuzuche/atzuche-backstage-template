@@ -114,7 +114,7 @@ class AsideView extends React.PureComponent {
         this.props.onMenuHandle(_current.url)
       }
     } catch (e) {
-      console.log(e)
+      console.error(e)
       message.error(e.msg || '系统异常')
     }
   }
