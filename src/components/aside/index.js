@@ -36,6 +36,11 @@ class AsideView extends React.PureComponent {
   // 设置默认选中状态
   setMenuKey() {
     const { props } = this
+
+    if (!props.list) {
+      return
+    }
+
     const currentMenu = findMenuInfo(props.defaultMenu, props.list, 'url')
 
     let selectedKeys = props.list[0] ? [props.list[0].id.toString()] : []
