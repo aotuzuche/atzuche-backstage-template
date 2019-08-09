@@ -14,7 +14,7 @@ HttpError.prototype.constructor = HttpError
 const config = {
   production: '/apigateway/',
   development: '/proxy/apigateway/',
-  test: '/apigateway/'
+  test: '/apigateway/',
 }
 
 const baseURL = config[process.env.PACKAGE] ? config[process.env.PACKAGE] : config['development']
@@ -23,12 +23,12 @@ const http = axios.create({
   baseURL,
   headers: {
     Accept: 'application/json;version=3.0;compress=false',
-    'Content-Type': 'application/json;charset=utf-8'
-  }
+    'Content-Type': 'application/json;charset=utf-8',
+  },
 })
 
 http.interceptors.request.use(
-  (config) => {
+  config => {
     const token = getToken()
     if (token) {
       config.headers.Authorization = token
@@ -36,13 +36,13 @@ http.interceptors.request.use(
 
     return config
   },
-  (error) => {
+  error => {
     return Promise.reject(error)
-  }
+  },
 )
 
 http.interceptors.response.use(
-  (config) => {
+  config => {
     if (config.data.resCode === '000000') {
       return config.data.data
     }
@@ -56,10 +56,10 @@ http.interceptors.response.use(
 
     return Promise.reject(new HttpError(config.data))
   },
-  (err) => {
+  err => {
     console.error(err)
     Promise.reject(new HttpError('系统错误'))
-  }
+  },
 )
 
 export default http

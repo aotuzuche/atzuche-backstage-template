@@ -41,7 +41,7 @@ class HeaderView extends React.PureComponent {
     this.state = {
       triggerIcon: 'fold',
       loginName: name,
-      hello
+      hello,
     }
   }
 
@@ -49,7 +49,7 @@ class HeaderView extends React.PureComponent {
     if (this.props.collapsed !== props.collapsed) {
       // eslint-disable-next-line react/no-will-update-set-state
       this.setState({
-        triggerIcon: props.collapsed ? 'unfold' : 'fold'
+        triggerIcon: props.collapsed ? 'unfold' : 'fold',
       })
     }
   }
@@ -75,7 +75,7 @@ class HeaderView extends React.PureComponent {
     return (
       <Layout.Header className="auto-header-bar">
         <Icon
-          type={`menu-` + state.triggerIcon}
+          type={'menu-' + state.triggerIcon}
           onClick={this.onTrigger}
           className="auto-trigger"
         />

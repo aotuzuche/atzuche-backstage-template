@@ -3,7 +3,7 @@ import models from './models/index'
 
 const dvaApp = dva.createApp({
   initialState: {},
-  models
+  models,
 })
 const store = dvaApp.getStore()
 

@@ -31,7 +31,7 @@ class AutoForm extends React.Component {
     super(props)
 
     this.state = {
-      loading: false
+      loading: false,
     }
 
     this.keys = {}
@@ -45,7 +45,7 @@ class AutoForm extends React.Component {
   }
 
   // 请求数据
-  fetchData = async (e) => {
+  fetchData = async e => {
     try {
       // 判断参数
       let apiList = this.props.apiList
@@ -54,7 +54,7 @@ class AutoForm extends React.Component {
       }
 
       this.setState({
-        loading: true
+        loading: true,
       })
 
       // 处理接口与请求方式
@@ -72,7 +72,7 @@ class AutoForm extends React.Component {
       // 整合请求参数
       const request = {
         method: method,
-        url: api
+        url: api,
       }
       if (method.toLowerCase() === 'get') {
         request.params = data
@@ -89,7 +89,7 @@ class AutoForm extends React.Component {
       // 按内容需要捆绑form的数据
       const values = {}
       this.props.columns &&
-        this.props.columns.forEach((res) => {
+        this.props.columns.forEach(res => {
           if (typeof res.value === 'function') {
             values[res.key] = res.value(this.dataSource)
           } else {
@@ -112,13 +112,13 @@ class AutoForm extends React.Component {
       Message.error(e.msg)
     } finally {
       this.setState({
-        loading: false
+        loading: false,
       })
     }
   }
 
   // 提交
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       try {
@@ -126,7 +126,7 @@ class AutoForm extends React.Component {
           throw new Error('系统错误')
         }
         this.setState({
-          loading: true
+          loading: true,
         })
 
         if (this.props.checkForm) {
@@ -148,17 +148,17 @@ class AutoForm extends React.Component {
         }
       } finally {
         this.setState({
-          loading: false
+          loading: false,
         })
       }
     })
   }
 
   // 提交请求
-  asyncSubmit = async (data) => {
+  asyncSubmit = async data => {
     try {
       this.setState({
-        loading: true
+        loading: true,
       })
 
       // 处理提交的接口
@@ -173,7 +173,7 @@ class AutoForm extends React.Component {
       // 整合请求参数
       const request = {
         method: method,
-        url: api
+        url: api,
       }
       if (method.toLowerCase() === 'get') {
         request.params = data
@@ -196,13 +196,13 @@ class AutoForm extends React.Component {
       Message.error(e.msg)
     } finally {
       this.setState({
-        loading: false
+        loading: false,
       })
     }
   }
 
   // 返回
-  onBackClick = (e) => {
+  onBackClick = e => {
     window.history.back()
     e.preventDefault()
   }
@@ -216,14 +216,14 @@ class AutoForm extends React.Component {
 
     // render默认为input输入框
     if (!render) {
-      render = (e) => <Input placeholder={`请输入${title}`} />
+      render = e => <Input placeholder={`请输入${title}`} />
     }
 
     // 初始化值
     let val = {}
     if (typeof initialValue !== 'undefined') {
       val = {
-        initialValue
+        initialValue,
       }
     }
 
@@ -236,7 +236,7 @@ class AutoForm extends React.Component {
 
     const _layout = {
       labelCol: { ...layout.labelCol },
-      wrapperCol: { ...layout.wrapperCol }
+      wrapperCol: { ...layout.wrapperCol },
     }
 
     if (span) {
@@ -262,12 +262,12 @@ class AutoForm extends React.Component {
     const layout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: labelSpan }
+        sm: { span: labelSpan },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: wrapperSpan }
-      }
+        sm: { span: wrapperSpan },
+      },
     }
 
     return (
@@ -293,12 +293,12 @@ class AutoForm extends React.Component {
     const layout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: labelSpan }
+        sm: { span: labelSpan },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: wrapperSpan }
-      }
+        sm: { span: wrapperSpan },
+      },
     }
 
     if (this.props.columns && this.props.columns.length) {

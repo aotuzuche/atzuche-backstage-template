@@ -10,5 +10,5 @@ class HomeView extends Event {
 }
 
 export default connect(({ home }) => ({
-  home
+  home,
 }))(HomeView)

@@ -17,14 +17,14 @@ class App extends React.PureComponent {
 
     this.state = {
       collapsed: false,
-      loading: false
+      loading: false,
     }
   }
 
   async componentDidMount() {
     try {
       this.setState({
-        loading: true
+        loading: true,
       })
       // 如果已经是pathname则不需要一直请求，dev上会无限循环
       if (this.props.location.pathname === '/system/login') {
@@ -46,32 +46,20 @@ class App extends React.PureComponent {
     }
   }
 
-  // 更新面包屑
-  async updateBreadcrumb(path) {
-    const { props } = this
-    const ids = findMenuPathIds(path, this.props.index.menus)
-    const breadcrumb = getMenuPathInfos(ids, this.props.index.menus)
-
-    props.dispatch({
-      type: 'index/set',
-      payload: { breadcrumb }
-    })
-  }
-
   // 菜单点击回调
-  onMenuHandle = (path) => {
+  onMenuHandle = path => {
     this.props.history.push(path)
     this.updateBreadcrumb(path)
   }
 
   // 侧边栏回调
-  onCollapse = (e) => {
+  onCollapse = e => {
     this.setState({
-      collapsed: e
+      collapsed: e,
     })
   }
 
-  deepMenuUrl = (menu) => {
+  deepMenuUrl = menu => {
     if (menu.children && menu.children[0].icon !== false && menu.children[0].icon !== 'false') {
       return this.deepMenuUrl(menu.children[0])
     }
@@ -83,7 +71,7 @@ class App extends React.PureComponent {
     // 获取登录权限和资源数据，获取资源数据更新menuList，放在store中
     await this.props.dispatch({
       type: 'index/fetchSystemMenu',
-      payload: { syscode: appConfig.syscode }
+      payload: { syscode: appConfig.syscode },
     })
 
     const menu = this.props.index.menus
@@ -97,14 +85,26 @@ class App extends React.PureComponent {
     this.updateBreadcrumb(path)
   }
 
-  go = (i) => () => {
+  go = i => () => {
     this.props.history.go(i)
+  }
+
+  // 更新面包屑
+  async updateBreadcrumb(path) {
+    const { props } = this
+    const ids = findMenuPathIds(path, this.props.index.menus)
+    const breadcrumb = getMenuPathInfos(ids, this.props.index.menus)
+
+    props.dispatch({
+      type: 'index/set',
+      payload: { breadcrumb },
+    })
   }
   render(props) {
     const { menus, breadcrumb } = this.props.index
     const { state } = this
     const len = breadcrumb && breadcrumb.length
-    const renderBradcrumb = (e) => {
+    const renderBradcrumb = e => {
       return (
         <Breadcrumb>
           <Breadcrumb.Item>首页</Breadcrumb.Item>
@@ -153,5 +153,5 @@ class App extends React.PureComponent {
 }
 
 export default connect(({ index }) => ({
-  index
+  index,
 }))(App)

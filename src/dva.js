@@ -8,7 +8,7 @@ function createApp(opt) {
   app = create(opt)
 
   if (!global.registered) {
-    opt.models.forEach((model) => app.model(model))
+    opt.models.forEach(model => app.model(model))
   }
   global.registered = true
 
@@ -27,5 +27,5 @@ export default {
   createApp,
   getDispatch() {
     return app.dispatch
-  }
+  },
 }

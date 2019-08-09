@@ -4,6 +4,6 @@ export default {
   reducers: {
     set(state, { payload }) {
       return { ...state, ...payload }
-    }
-  }
+    },
+  },
 }

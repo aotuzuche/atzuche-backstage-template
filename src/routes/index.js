@@ -7,7 +7,7 @@ import App from './app'
 import HomeView from '../views/home'
 
 // 配置路由
-const Routes = (e) => {
+const Routes = e => {
   return (
     <BrowserRouter basename={appConfig.basename}>
       <LocaleProvider locale={zh_CN}>

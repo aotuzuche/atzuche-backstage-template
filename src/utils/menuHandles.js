@@ -23,7 +23,7 @@ const findMenuInfo = (value, menuTree, key = 'id') => {
 
 // 获取所有父集节点
 const getMenuPathInfos = (ids = [], menuTree) => {
-  const menuPathInfos = ids.map((id) => {
+  const menuPathInfos = ids.map(id => {
     return findMenuInfo(id, menuTree)
   })
   return menuPathInfos
@@ -68,12 +68,12 @@ const findMenuPathIds = (path, menuTree) => {
  *
  * @return {Object[]} treeData - The flat data represented as a tree
  */
-const getTreeFromFlatData = (args) => {
+const getTreeFromFlatData = args => {
   const {
     flatData,
-    getKey = (node) => node.id,
-    getParentKey = (node) => node.parentId,
-    rootKey = '0'
+    getKey = node => node.id,
+    getParentKey = node => node.parentId,
+    rootKey = '0',
   } = args
 
   if (!flatData) {
@@ -81,7 +81,7 @@ const getTreeFromFlatData = (args) => {
   }
 
   const childrenToParents = {}
-  flatData.forEach((child) => {
+  flatData.forEach(child => {
     const parentKey = getParentKey(child)
 
     if (parentKey in childrenToParents) {
@@ -95,19 +95,19 @@ const getTreeFromFlatData = (args) => {
     return []
   }
 
-  const trav = (parent) => {
+  const trav = parent => {
     const parentKey = getKey(parent)
     if (parentKey in childrenToParents) {
       return {
         ...parent,
-        children: childrenToParents[parentKey].map((child) => trav(child))
+        children: childrenToParents[parentKey].map(child => trav(child)),
       }
     }
 
     return { ...parent }
   }
 
-  return childrenToParents[rootKey].map((child) => trav(child))
+  return childrenToParents[rootKey].map(child => trav(child))
 }
 
 export { findMenuInfo, getMenuPathInfos, findMenuPathIds, getTreeFromFlatData }

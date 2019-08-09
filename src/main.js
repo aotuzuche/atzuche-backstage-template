@@ -21,7 +21,7 @@ render(
   <Provider store={store} key={Math.random()}>
     <Router />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 )
 
 module.hot && module.hot.accept()

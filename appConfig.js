@@ -18,5 +18,5 @@ module.exports = {
   target: 'http://test1-web.autozuche.com/',
 
   // html 文档的标题
-  title: '<%= projectName %>'
+  title: '<%= projectName %>',
 }

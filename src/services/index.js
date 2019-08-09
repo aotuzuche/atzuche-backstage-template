@@ -1,12 +1,12 @@
 import http from '../utils/http'
 
-const fetchSystemMenu = (payload) => {
+const fetchSystemMenu = payload => {
   return http.request({
     url: `/auth/console/auth/menu/${payload.syscode}`,
-    method: 'GET'
+    method: 'GET',
   })
 }
 
 export default {
-  fetchSystemMenu
+  fetchSystemMenu,
 }

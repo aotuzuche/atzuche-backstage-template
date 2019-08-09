@@ -43,7 +43,7 @@ class AutoTable extends React.Component {
 
     this.state = {
       loading: true,
-      dataSource: []
+      dataSource: [],
     }
 
     // 定义翻页参数
@@ -56,7 +56,7 @@ class AutoTable extends React.Component {
     // 定义搜索关键字
     const keyword = {
       ...s,
-      ...props.keyword
+      ...props.keyword,
     }
     delete keyword._p
     this.keyword = keyword
@@ -72,21 +72,17 @@ class AutoTable extends React.Component {
     this.fetchData()
   }
 
-  get _search() {
-    return window.location.search ? qs.parse(window.location.search.replace(/^\?/, '')) : {}
-  }
-
   // loading
   loading = () => {
     this.setState({
-      loading: true
+      loading: true,
     })
   }
 
   // unloading
   unloading = () => {
     this.setState({
-      loading: false
+      loading: false,
     })
   }
 
@@ -94,7 +90,7 @@ class AutoTable extends React.Component {
   search = (keyword = {}) => {
     let kw = {}
     // 做一次过滤
-    Object.entries(keyword).forEach(([k, v]) => {
+    Object.entries(keyword).forEach(([ k, v ]) => {
       if (typeof v !== 'undefined' && v !== '') {
         if (v._isAMomentObject) {
           kw[k] = v.valueOf()
@@ -120,7 +116,7 @@ class AutoTable extends React.Component {
   }
 
   // 翻到指定页面，外部通过ref调用
-  pageTo = (num) => {
+  pageTo = num => {
     return new Promise((resolve, reject) => {
       this.skip = num
       this.count = 0
@@ -129,10 +125,10 @@ class AutoTable extends React.Component {
   }
 
   // 请求数据
-  fetchData = async (e) => {
+  fetchData = async e => {
     try {
       this.setState({
-        loading: true
+        loading: true,
       })
 
       // 处理接口与请求方式
@@ -148,13 +144,13 @@ class AutoTable extends React.Component {
       const data = {
         [this.pageSize]: this.limit,
         [this.pageNum]: this.skip,
-        ...this.keyword
+        ...this.keyword,
       }
 
       // 整合请求参数
       const request = {
         method: method,
-        url: api
+        url: api,
       }
       if (method.toLowerCase() === 'get') {
         request.params = data
@@ -171,7 +167,7 @@ class AutoTable extends React.Component {
           [this.pageNum]: this.skip,
           [this.pageSize]: this.limit,
           [this.total]: 0,
-          [this.list]: []
+          [this.list]: [],
         }
       }
 
@@ -182,13 +178,13 @@ class AutoTable extends React.Component {
 
       // 数据存入，重渲
       this.setState({
-        dataSource: res[this.list]
+        dataSource: res[this.list],
       })
 
       // 更新页面search
       if (window.history && window.history.replaceState) {
         const s = {
-          ...this.keyword
+          ...this.keyword,
         }
         s._p = this.skip
         const url = window.location.pathname + '?' + qs.stringify(s)
@@ -203,16 +199,20 @@ class AutoTable extends React.Component {
       Message.error(e.msg)
     } finally {
       this.setState({
-        loading: false
+        loading: false,
       })
     }
   }
 
   // 翻页
-  onChange = (e) => {
+  onChange = e => {
     this.limit = e.pageSize
     this.skip = e.current
     this.fetchData()
+  }
+
+  get _search() {
+    return window.location.search ? qs.parse(window.location.search.replace(/^\?/, '')) : {}
   }
 
   render() {
@@ -221,30 +221,30 @@ class AutoTable extends React.Component {
     if (this.props.columns && this.props.columns.length) {
       for (let i = 0; i < this.props.columns.length; i++) {
         const it = this.props.columns[i]
-        const data = (it.data || '').split(',').map((res) => res.trim())
+        const data = (it.data || '').split(',').map(res => res.trim())
 
         const item = {
           title: data[0],
           key: data[1],
           className: it.className || `auto-table-item__${data[1]}`,
-          dataIndex: data[1]
+          dataIndex: data[1],
         }
 
         // 这项是数字
         data[2] = data[2] - 0
         if (data[2] === ~~data[2]) {
           item.width = data[2]
-        } else if (['left', 'center', 'right'].indexOf(data[2]) !== -1) {
+        } else if ([ 'left', 'center', 'right' ].indexOf(data[2]) !== -1) {
           item.align = data[2]
         }
-        if (['left', 'center', 'right'].indexOf(data[3]) !== -1) {
+        if ([ 'left', 'center', 'right' ].indexOf(data[3]) !== -1) {
           item.align = data[3]
         }
 
         if (it.render) {
           item.render = it.render
         } else {
-          item.render = (e) => {
+          item.render = e => {
             return typeof e !== 'undefined' && e !== null ? e : '-'
           }
         }
@@ -277,7 +277,7 @@ class AutoTable extends React.Component {
       'keyword',
       'rowKey',
       'api',
-      'ref'
+      'ref',
     ])
 
     const css = classnames('auto-table', this.props.className)
@@ -295,7 +295,7 @@ class AutoTable extends React.Component {
             defaultCurrent: 1,
             current: this.skip,
             pageSize: this.limit,
-            total: this.count
+            total: this.count,
           }}
           locale={{
             emptyText: (
@@ -303,7 +303,7 @@ class AutoTable extends React.Component {
                 <Icon type="frown-o" />
                 暂无数据
               </p>
-            )
+            ),
           }}
         />
       </div>

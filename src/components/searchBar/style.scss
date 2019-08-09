@@ -2,9 +2,16 @@
   margin-bottom: 24px;
   padding-bottom: 24px;
   border-bottom: 1px dashed #f0f0f0;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
   .ant-form-item {
     display: flex;
     margin-bottom: 12px;
+
+  }
+  .ant-checkbox-wrapper {
+    line-height: 32px;
   }
   .ant-form-item-label {
     display: block;
@@ -17,7 +24,7 @@
     display: block;
     .ant-form-item-control {
       line-height: 32px;
-      * {
+      > * {
         display: block;
       }
     }

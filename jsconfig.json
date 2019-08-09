@@ -1,13 +1,19 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
     "paths": {
-      "src": ["./src"],
-      "@": ["./src"],
-      "$assets": ["./src/assets"],
-      "$components": ["./src/components"],
-      "$views": ["./src/views"],
-      "$utils": ["./src/utils"]
-    }
-  }
+      "*": ["*", "src/*"],
+      "src/*": ["src/*"],
+      "@/*": ["src/*"],
+      "$assets/*": ["src/assets/*"],
+      "$components/*": ["src/components/*"],
+      "$views/*": ["src/views/*"],
+      "$utils/*": ["src/utils/*"]
+    },
+    "jsx": "react",
+    "module": "commonjs",
+    "moduleResolution": "node"
+  },
+  "exclude": ["node_modules"]
 }

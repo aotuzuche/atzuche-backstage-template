@@ -6,12 +6,12 @@ const index = {
   namespace: 'index',
   state: {
     menus: null,
-    breadcrumb: null
+    breadcrumb: null,
   },
   reducers: {
     set(state, { payload }) {
       return { ...state, ...payload }
-    }
+    },
   },
   effects: {
     *fetchSystemMenu({ payload }, { call, put }) {
@@ -19,24 +19,24 @@ const index = {
         const systemMenu = yield call(services.fetchSystemMenu, payload)
 
         const menus = getTreeFromFlatData({
-          flatData: systemMenu.list.map((node) => {
+          flatData: systemMenu.list.map(node => {
             return { ...node }
           }),
-          getKey: (node) => node.id, // resolve a node's key
-          getParentKey: (node) => node.pid // resolve a node's parent's key
+          getKey: node => node.id, // resolve a node's key
+          getParentKey: node => node.pid, // resolve a node's parent's key
         })
 
         yield put({
           type: 'set',
           payload: {
-            menus: menus
-          }
+            menus: menus,
+          },
         })
       } catch (error) {
         Promise.reject(error)
       }
-    }
-  }
+    },
+  },
 }
 
-export default [index, home]
+export default [ index, home ]
