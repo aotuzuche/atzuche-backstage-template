@@ -45,7 +45,7 @@ class Upload extends React.PureComponent {
   }
 
   // 文件变动handler
-  fileChange = async e => {
+  fileChange = async (e) => {
     const [file] = e.target.files
 
     if (!file.type.match('image.*')) {
@@ -65,7 +65,7 @@ class Upload extends React.PureComponent {
         const { host, dir } = sign
         const xhr = new XMLHttpRequest()
 
-        xhr.addEventListener('load', e => {
+        xhr.addEventListener('load', (e) => {
           if (xhr.status === 204) {
             this.props.onChange(dir + filename)
             this.filebtn.value = '' // 重置上传插件的value值，以便于可以重复上传同张同片而不会没有反应
@@ -96,11 +96,11 @@ class Upload extends React.PureComponent {
     return fileForm
   }
 
-  onDel = e => {
+  onDel = (e) => {
     this.props.onChange('')
   }
 
-  onUpload = e => {
+  onUpload = (e) => {
     if (this.filebtn) {
       this.filebtn.click()
     } else {
@@ -135,7 +135,7 @@ class Upload extends React.PureComponent {
           上传图片
         </Button>
         <input
-          ref={e => {
+          ref={(e) => {
             this.filebtn = e
           }}
           className="auto-imgupload__file-button"

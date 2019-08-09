@@ -90,7 +90,7 @@ class AutoTable extends React.Component {
   search = (keyword = {}) => {
     let kw = {}
     // 做一次过滤
-    Object.entries(keyword).forEach(([ k, v ]) => {
+    Object.entries(keyword).forEach(([k, v]) => {
       if (typeof v !== 'undefined' && v !== '') {
         if (v._isAMomentObject) {
           kw[k] = v.valueOf()
@@ -116,7 +116,7 @@ class AutoTable extends React.Component {
   }
 
   // 翻到指定页面，外部通过ref调用
-  pageTo = num => {
+  pageTo = (num) => {
     return new Promise((resolve, reject) => {
       this.skip = num
       this.count = 0
@@ -125,7 +125,7 @@ class AutoTable extends React.Component {
   }
 
   // 请求数据
-  fetchData = async e => {
+  fetchData = async (e) => {
     try {
       this.setState({
         loading: true,
@@ -205,7 +205,7 @@ class AutoTable extends React.Component {
   }
 
   // 翻页
-  onChange = e => {
+  onChange = (e) => {
     this.limit = e.pageSize
     this.skip = e.current
     this.fetchData()
@@ -221,7 +221,7 @@ class AutoTable extends React.Component {
     if (this.props.columns && this.props.columns.length) {
       for (let i = 0; i < this.props.columns.length; i++) {
         const it = this.props.columns[i]
-        const data = (it.data || '').split(',').map(res => res.trim())
+        const data = (it.data || '').split(',').map((res) => res.trim())
 
         const item = {
           title: data[0],
@@ -234,17 +234,17 @@ class AutoTable extends React.Component {
         data[2] = data[2] - 0
         if (data[2] === ~~data[2]) {
           item.width = data[2]
-        } else if ([ 'left', 'center', 'right' ].indexOf(data[2]) !== -1) {
+        } else if (['left', 'center', 'right'].indexOf(data[2]) !== -1) {
           item.align = data[2]
         }
-        if ([ 'left', 'center', 'right' ].indexOf(data[3]) !== -1) {
+        if (['left', 'center', 'right'].indexOf(data[3]) !== -1) {
           item.align = data[3]
         }
 
         if (it.render) {
           item.render = it.render
         } else {
-          item.render = e => {
+          item.render = (e) => {
             return typeof e !== 'undefined' && e !== null ? e : '-'
           }
         }
@@ -299,7 +299,7 @@ class AutoTable extends React.Component {
           }}
           locale={{
             emptyText: (
-              <p className={'empty-text'}>
+              <p className="empty-text">
                 <Icon type="frown-o" />
                 暂无数据
               </p>

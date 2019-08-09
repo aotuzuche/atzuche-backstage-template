@@ -1,7 +1,7 @@
 const token = 'auto_system_token'
 const data = 'auto_system_userData'
 
-export const setToken = e => localStorage.setItem(token, e)
+export const setToken = (e) => localStorage.setItem(token, e)
 export const getToken = () => localStorage.getItem(token)
 export const clearToken = () => {
   localStorage.removeItem(token)
@@ -12,7 +12,7 @@ export const getUserInfo = () => {
   return localStorage[data] ? JSON.parse(localStorage[data]) : null
 }
 
-export const initToken = async e => {
+export const initToken = async (e) => {
   return new Promise((resolve, reject) => {
     const token = getToken()
     if (token) {
@@ -23,6 +23,6 @@ export const initToken = async e => {
   })
 }
 
-export const toLogin = e => {
+export const toLogin = (e) => {
   window.location.href = '/system/login'
 }

@@ -27,7 +27,7 @@ class AutoSearchBar extends React.Component {
     const columns = props.columns ? props.columns : []
     const fileds = {}
 
-    columns.forEach(res => {
+    columns.forEach((res) => {
       fileds[res.key] = {
         value: res.initialValue,
       }
@@ -94,7 +94,7 @@ class AutoSearchBar extends React.Component {
     )
   }
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       try {
@@ -122,12 +122,12 @@ class AutoSearchBar extends React.Component {
     })
   }
 
-  onReset = e => {
+  onReset = (e) => {
     this.props.form.setFields(this.state.initialFileds)
     this.props.onReset && this.props.onReset()
   }
 
-  toggleUpDown = e => {
+  toggleUpDown = (e) => {
     this.setState({
       down: !this.state.down,
     })
@@ -135,7 +135,7 @@ class AutoSearchBar extends React.Component {
 
   renderSubmit() {
     return (
-      <Row gutter={24} className={'auto-search-bar__submit'}>
+      <Row gutter={24} className="auto-search-bar__submit">
         <Col span={24}>
           <Button type="primary" htmlType="submit">
             {!this.state.loading ? <Icon type="search" /> : <Icon type="loading" />}
@@ -146,11 +146,7 @@ class AutoSearchBar extends React.Component {
           </Button>
           {this.props.addonButton && this.props.addonButton()}
           {this.props.columns.length > this.state.initialItemCount && (
-            <a
-              href="javascript:;"
-              className={'auto-search-bar__up-down'}
-              onClick={this.toggleUpDown}
-            >
+            <a href="javascript:;" className="auto-search-bar__up-down" onClick={this.toggleUpDown}>
               {this.state.down ? '收起 ' : '展开 '}
               {this.state.down ? (
                 <Icon type="up" style={{ fontSize: 12 }} />
@@ -175,7 +171,7 @@ class AutoSearchBar extends React.Component {
     if (this.props.columns && this.props.columns.length) {
       // 把所有组件的从props中整理出来
       const columns = []
-      this.props.columns.forEach(res => {
+      this.props.columns.forEach((res) => {
         columns.push({ ...res })
       })
 

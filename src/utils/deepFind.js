@@ -25,7 +25,7 @@ const deepFind = (id, arr, key = 'id') => {
 const getParents = (e, arr) => {
   const path = e ? e : []
 
-  const pathItem = path.map(item => {
+  const pathItem = path.map((item) => {
     return deepFind(item, arr)
   })
 
@@ -66,8 +66,8 @@ const deepFindPath = (path, arr, keyPaths = []) => {
  */
 const getTreeFromFlatData = ({
   flatData,
-  getKey = node => node.id,
-  getParentKey = node => node.parentId,
+  getKey = (node) => node.id,
+  getParentKey = (node) => node.parentId,
   rootKey = '0',
 }) => {
   if (!flatData) {
@@ -75,7 +75,7 @@ const getTreeFromFlatData = ({
   }
 
   const childrenToParents = {}
-  flatData.forEach(child => {
+  flatData.forEach((child) => {
     const parentKey = getParentKey(child)
 
     if (parentKey in childrenToParents) {
@@ -89,19 +89,19 @@ const getTreeFromFlatData = ({
     return []
   }
 
-  const trav = parent => {
+  const trav = (parent) => {
     const parentKey = getKey(parent)
     if (parentKey in childrenToParents) {
       return {
         ...parent,
-        children: childrenToParents[parentKey].map(child => trav(child)),
+        children: childrenToParents[parentKey].map((child) => trav(child)),
       }
     }
 
     return { ...parent }
   }
 
-  return childrenToParents[rootKey].map(child => trav(child))
+  return childrenToParents[rootKey].map((child) => trav(child))
 }
 
 export { deepFind, getParents, deepFindPath, getTreeFromFlatData }

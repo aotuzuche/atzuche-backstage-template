@@ -31,7 +31,7 @@ class Fetch extends React.Component {
     this.startFetch()
   }
 
-  startFetch = e => {
+  startFetch = (e) => {
     const key = this.props.api + '?' + qs.stringify(this.props.data)
 
     if (this.props.cache && cache[key]) {
@@ -44,7 +44,7 @@ class Fetch extends React.Component {
   }
 
   // 请求数据
-  fetchData = async e => {
+  fetchData = async (e) => {
     try {
       this.setState({
         loading: true,
