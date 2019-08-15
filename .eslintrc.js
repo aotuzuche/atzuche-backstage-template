@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['eslint-config-atzuche/react']
+  extends: ['eslint-config-atzuche/react'],
 }

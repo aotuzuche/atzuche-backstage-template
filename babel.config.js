@@ -6,9 +6,9 @@ module.exports = {
       {
         useBuiltIns: 'usage',
         corejs: 3,
-        modules: 'commonjs'
-      }
-    ]
+        modules: 'commonjs',
+      },
+    ],
   ],
   plugins: [
     '@babel/plugin-transform-runtime',
@@ -17,8 +17,8 @@ module.exports = {
       'import',
       {
         libraryName: 'antd',
-        style: 'css'
-      }
+        style: 'css',
+      },
     ],
     [
       'react-css-modules',
@@ -26,19 +26,19 @@ module.exports = {
         generateScopedName: '[local]_[hash:base64:6]',
         filetypes: {
           '.mcss': {
-            syntax: 'postcss-scss'
-          }
+            syntax: 'postcss-scss',
+          },
         },
-        handleMissingStyleName: 'ignore'
-      }
+        handleMissingStyleName: 'ignore',
+      },
     ],
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-syntax-import-meta',
     [
       '@babel/plugin-proposal-decorators',
       {
-        legacy: true
-      }
+        legacy: true,
+      },
     ],
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-json-strings',
@@ -52,11 +52,11 @@ module.exports = {
     [
       '@babel/plugin-proposal-pipeline-operator',
       {
-        proposal: 'minimal'
-      }
+        proposal: 'minimal',
+      },
     ],
     '@babel/plugin-proposal-nullish-coalescing-operator',
     '@babel/plugin-proposal-do-expressions',
-    '@babel/plugin-proposal-function-bind'
-  ]
+    '@babel/plugin-proposal-function-bind',
+  ],
 }

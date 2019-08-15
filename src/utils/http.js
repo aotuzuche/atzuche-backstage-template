@@ -58,7 +58,7 @@ http.interceptors.response.use(
   },
   (err) => {
     console.error(err)
-    Promise.reject(new HttpError('系统错误'))
+    return Promise.reject(new HttpError('系统错误'))
   },
 )
 

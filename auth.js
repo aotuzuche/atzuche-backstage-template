@@ -21,7 +21,7 @@ task()
 async function task() {
   const files = await fileList(path.resolve(dir))
   const queue = []
-  files.forEach(v => {
+  files.forEach((v) => {
     queue.push(readFile(v))
   })
   const results = await Promise.all(queue)
@@ -35,7 +35,7 @@ async function task() {
     getSystemContent(ymlJsonData.system),
     getMenuContent(ymlJsonData.menu),
     getResourceContent(source),
-    getFunctionContent(source, ymlJsonData.function)
+    getFunctionContent(source, ymlJsonData.function),
   ]
   fs.outputFile(filename, result.join('\n'), function() {
     console.log('success')
@@ -49,11 +49,11 @@ function getSystemContent(system) {
       system: {
         name: appConfig.titleName,
         systemCode: appConfig.syscode,
-        url: `/system/${appConfig.prodPath}`
-      }
+        url: `/system/${appConfig.prodPath}`,
+      },
     },
     2,
-    2
+    2,
   )
 }
 
@@ -63,11 +63,11 @@ function getMenuContent(menu) {
     {
       menu: [
         ['菜单名称1', '菜单地址', '菜单icon', null],
-        ['菜单名称2', '菜单地址', '菜单icon', '菜单名称1']
-      ]
+        ['菜单名称2', '菜单地址', '菜单icon', '菜单名称1'],
+      ],
     },
     2,
-    2
+    2,
   )
 }
 
@@ -75,17 +75,13 @@ function getResourceContent(source = []) {
   if (source.length === 0) {
     return yaml.stringify(
       {
-        resource: [['资源名称', '资源地址', '资源调用类型']]
+        resource: [['资源名称', '资源地址', '资源调用类型']],
       },
       2,
-      2
+      2,
     )
   }
-  return yaml.stringify(
-    { resource: source.map(item => item.slice(0, 3)) },
-    2,
-    2
-  )
+  return yaml.stringify({ resource: source.map((item) => item.slice(0, 3)) }, 2, 2)
 }
 
 function getFunctionContent(source, oldFunction = {}) {
@@ -95,25 +91,25 @@ function getFunctionContent(source, oldFunction = {}) {
         function: {
           功能1: {
             menu: ['菜单名称', '菜单名称'],
-            resource: ['资源名称', '资源名称']
-          }
-        }
+            resource: ['资源名称', '资源名称'],
+          },
+        },
       },
       3,
-      2
+      2,
     )
   }
   const result = {}
-  source.forEach(item => {
+  source.forEach((item) => {
     const resourceName = item[0]
     const functionArr = item[3].split(',')
-    functionArr.forEach(func => {
+    functionArr.forEach((func) => {
       if (result[func]) {
         result[func].resource.push(resourceName)
       } else {
         result[func] = {
           menu: (oldFunction[func] || {}).menu || [],
-          resource: [resourceName]
+          resource: [resourceName],
         }
       }
     })
@@ -128,19 +124,16 @@ function readFile(path) {
       const results = []
       const mathch = data.match(chunkReg)
       mathch &&
-        mathch.forEach(v => {
-          const name =
-            v.match(nameReg) && v.match(nameReg)[0].replace(/@name /, '')
+        mathch.forEach((v) => {
+          const name = v.match(nameReg) && v.match(nameReg)[0].replace(/@name /, '')
           const method =
             v.match(methodReg) &&
             v
               .match(methodReg)[0]
               .replace(/@method /, '')
               .toUpperCase()
-          const link =
-            v.match(linkReg) && v.match(linkReg)[0].replace(/@link /, '')
-          const func =
-            v.match(funcReg) && v.match(funcReg)[0].replace(/@function /, '')
+          const link = v.match(linkReg) && v.match(linkReg)[0].replace(/@link /, '')
+          const func = v.match(funcReg) && v.match(funcReg)[0].replace(/@function /, '')
           if (!name || !method || !link || !func) {
             return
           }
@@ -183,7 +176,7 @@ function readDir(filePath) {
             queue.push(readDir(filedir))
           }
         })
-        Promise.all(queue).then(res => {
+        Promise.all(queue).then((res) => {
           resolve(results.concat(...res))
         })
       }

@@ -1,7 +1,7 @@
 .clear-fix::after,
 .clear-fix::before {
   display: table;
-  content: ''
+  content: '';
 }
 
 .clear-fix::after {
@@ -15,4 +15,3 @@
 .f-r {
   float: right;
 }
-
