@@ -13,6 +13,7 @@
     "lint": "eslint --fix ./src --ext .js,.jsx",
     "format": "prettier --write src/**/*.{js,jsx}",
     "auth": "node ./auth.js",
+    "eslint": "eslint src --ext .js,.jsx --fix",
     "prettier": "prettier -c --write '**/*'"
   },
   "husky": {
