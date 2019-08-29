@@ -5,7 +5,7 @@ const findMenuInfo = (value, menuTree, key = 'id') => {
   }
   let result = null
   for (let i = 0; i < menuTree.length; i++) {
-    if (menuTree[i][key].toString() === value.toString()) {
+    if (menuTree[i][key] && menuTree[i][key].toString() === value.toString()) {
       result = menuTree[i]
       break
     }
