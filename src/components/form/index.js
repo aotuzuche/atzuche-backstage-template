@@ -45,7 +45,7 @@ class AutoForm extends React.Component {
   }
 
   // 请求数据
-  fetchData = async (e) => {
+  fetchData = async e => {
     try {
       // 判断参数
       let apiList = this.props.apiList
@@ -89,7 +89,7 @@ class AutoForm extends React.Component {
       // 按内容需要捆绑form的数据
       const values = {}
       this.props.columns &&
-        this.props.columns.forEach((res) => {
+        this.props.columns.forEach(res => {
           if (typeof res.value === 'function') {
             values[res.key] = res.value(this.dataSource)
           } else {
@@ -118,7 +118,7 @@ class AutoForm extends React.Component {
   }
 
   // 提交
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       try {
@@ -155,7 +155,7 @@ class AutoForm extends React.Component {
   }
 
   // 提交请求
-  asyncSubmit = async (data) => {
+  asyncSubmit = async data => {
     try {
       this.setState({
         loading: true,
@@ -202,7 +202,7 @@ class AutoForm extends React.Component {
   }
 
   // 返回
-  onBackClick = (e) => {
+  onBackClick = e => {
     window.history.back()
     e.preventDefault()
   }
@@ -216,7 +216,7 @@ class AutoForm extends React.Component {
 
     // render默认为input输入框
     if (!render) {
-      render = (e) => <Input placeholder={`请输入${title}`} />
+      render = e => <Input placeholder={`请输入${title}`} />
     }
 
     // 初始化值

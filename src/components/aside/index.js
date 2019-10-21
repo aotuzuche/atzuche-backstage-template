@@ -31,7 +31,7 @@ class AsideView extends React.PureComponent {
     }
   }
   // 菜单点击事件
-  onMenuHandle = (e) => {
+  onMenuHandle = e => {
     try {
       const _current = findMenuInfo(e.key, this.props.list)
       if (_current) {
@@ -44,7 +44,7 @@ class AsideView extends React.PureComponent {
   }
 
   // 菜单选中
-  onMenuSelect = (e) => {
+  onMenuSelect = e => {
     const selectedKeys = e.selectedKeys
     this.setState({
       selectedKeys,
@@ -52,7 +52,7 @@ class AsideView extends React.PureComponent {
   }
 
   // 自动监测收起或者关闭菜单
-  onCollapse = (collapsed) => {
+  onCollapse = collapsed => {
     this.props.onCollapse(collapsed)
   }
   isFalse(icon) {
@@ -76,7 +76,7 @@ class AsideView extends React.PureComponent {
       let url = currentMenu.url
       const ids = findMenuPathIds(url, props.list)
       let find = false
-      openKeys = ids.reverse().map((id) => {
+      openKeys = ids.reverse().map(id => {
         const menu = findMenuInfo(id, props.list)
         if (!find && !this.isFalse(menu.icon)) {
           selectedKeys = [menu.id.toString()]
@@ -97,13 +97,13 @@ class AsideView extends React.PureComponent {
     if (!(obj instanceof Array)) {
       return null
     }
-    return obj.map((item) => {
+    return obj.map(item => {
       // 判断是否有子菜单
       let hasSub = false
       if (item.children instanceof Array) {
         // 如果所有的子菜单都是隐藏形式的话
         // 就认为该菜单没有子菜单
-        hasSub = item.children.some((res) => !this.isFalse(res.icon))
+        hasSub = item.children.some(res => !this.isFalse(res.icon))
       }
 
       if (hasSub) {
@@ -158,7 +158,7 @@ class AsideView extends React.PureComponent {
           theme="dark"
           onClick={this.onMenuHandle}
           onSelect={this.onMenuSelect}
-          onOpenChange={(e) => {
+          onOpenChange={e => {
             this.setState({
               openKeys: e,
             })

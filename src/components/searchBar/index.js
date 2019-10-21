@@ -27,7 +27,7 @@ class AutoSearchBar extends React.Component {
     const columns = props.columns ? props.columns : []
     const fileds = {}
 
-    columns.forEach((res) => {
+    columns.forEach(res => {
       fileds[res.key] = {
         value: res.initialValue,
       }
@@ -94,7 +94,7 @@ class AutoSearchBar extends React.Component {
     )
   }
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       try {
@@ -122,12 +122,12 @@ class AutoSearchBar extends React.Component {
     })
   }
 
-  onReset = (e) => {
+  onReset = e => {
     this.props.form.setFields(this.state.initialFileds)
     this.props.onReset && this.props.onReset()
   }
 
-  toggleUpDown = (e) => {
+  toggleUpDown = e => {
     this.setState({
       down: !this.state.down,
     })
@@ -171,7 +171,7 @@ class AutoSearchBar extends React.Component {
     if (this.props.columns && this.props.columns.length) {
       // 把所有组件的从props中整理出来
       const columns = []
-      this.props.columns.forEach((res) => {
+      this.props.columns.forEach(res => {
         columns.push({ ...res })
       })
 
