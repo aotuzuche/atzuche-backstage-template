@@ -2,8 +2,8 @@ import axios from 'axios'
 import { getToken, clearToken } from './token'
 
 function HttpError(result) {
-  const { resMsg, resCode, data } = result
-  this.msg = resMsg
+  const { resMsg, resCode, data, message } = result
+  this.msg = resMsg || message || '系统错误'
   this.name = 'HttpError'
   this.data = data
   this.code = resCode
@@ -54,11 +54,15 @@ http.interceptors.response.use(
       return
     }
 
+    if (config.status >= 200 && config.status <= 300) {
+      return config.data
+    }
+
     return Promise.reject(new HttpError(config.data))
   },
   err => {
     console.error(err)
-    return Promise.reject(new HttpError('系统错误'))
+    return Promise.reject(new HttpError(err.response.data))
   },
 )
 
