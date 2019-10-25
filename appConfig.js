@@ -19,4 +19,6 @@ module.exports = {
 
   // html 文档的标题
   title: '<%= projectName %>',
+
+  isSystem: true,
 }

@@ -285,12 +285,12 @@ class AutoTable extends React.Component {
     return (
       <div className={css}>
         <Table
-          {...tableProps}
           dataSource={this.state.dataSource}
           columns={cols}
           onChange={this.onChange}
           rowKey={this.props.rowKey || 'id'}
           loading={this.state.loading}
+          scroll={{ x: 'max-content', scrollToFirstRowOnChange: true }}
           pagination={{
             defaultCurrent: 1,
             current: this.skip,
@@ -305,6 +305,7 @@ class AutoTable extends React.Component {
               </p>
             ),
           }}
+          {...tableProps}
         />
       </div>
     )
