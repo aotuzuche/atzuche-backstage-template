@@ -1,71 +1,64 @@
 import React from 'react'
-import { Table, Message, Icon } from 'antd'
+import _ from 'lodash'
 import http from 'src/utils/http'
-import './style'
+import { Table, message } from 'antd'
 import qs from 'qs'
 import ignore from 'src/utils/ignoreProps'
-import classnames from 'classnames'
+import './style'
 
 /**
- * 参数
- * columns={columns} // 骨架
- *     骨架：
- *     data: '标题,key,宽度,对齐方式'
- *     render: 重写组件，有2个参数，第一个是key对应的值，第二个是全量的该条目数据
- *     fixed: 列是否固定，可选 true(等效于 left) 'left' 'right'
- *     className: 样式名
- *     renderConsole: 操作栏的内容，权重比render高，给的参数为全量的该条目数据，需返回一个数组的组件
+ * @class ATTable
+ * 基于 https://ant.design/components/table-cn/ 二次封装，支持下面的参数
+ * @extends {React.Component}
  *
- * listName="list" // 接口返回数据中数据所在的字段名，默认list
- * initialPageNum={1} // 默认第几页面
- * pageSize={10} // 页大小，默认10
- * pageSizeName="pageSize" // 分页字段名，默认pageSize
- * pageNumName="pageNum" // 分页字段名，默认pageNum
- * totalName="total" // 接口返回数据中总条数的字段名，默认total
- * afterFetch // 接口请求完成的回调
- * keyword={{}} // 默认搜索参数
- * rowKey="id" // rowKey，默认id
- * api={'NewConsole/console/v50/banner/list'} // api地址，如果需要改变请求方式(默认get请求)的话，参数为 'patch:url' 或'post:url'等
- * ref={e => this.table = e} // 若要用到搜索，需要把组件对象给拿出来，在该对象里可以找到search方法，用它做搜索
+ * @param {column[]} columns 数据结构
+ * @param {string} column.data  '标题,key'
+ * @param {() => React.ReactNode} column.render 自定义渲染
+ * @param {() => React.ReactNode} column.renderConsole 自定义渲染（操作栏）
+ * 其余参数 https://ant.design/components/table-cn/#Column
  *
- * 方法
- * 搜索
- * search(keyword) // 返回一个Promise, 参数： keyword，对象或空，会加到api地址的参数里，并翻到第一页
- * refresh() // 返回一个Promise 刷新，保留当前面及搜索参数
- * pageTo(num) // 返回一个Promise 翻到指定页面
+ * @param {string} listName @default list 接口返回携带数据的 key
+ * @param {number} initialPageNum @default 1 默认第几页
+ * @param {number} pageSize @default 10 分页大小
+ * @param {string} pageSizeName @default pageSize 接口返回携带分页大小的 key
+ * @param {string} pageNumName @default pageNum 接口返回当前页的 key
+ * @param {string} totalName @default total 接口返回总页大小的 key
+ * @param {() => void} afterFetch 接口完成的回调
+ * @param {object} keywords 接口携带的额外参数
+ * @param {string} api api地址，如果需要改变请求方式(默认get请求)的话，参数为 'patch:url' 或'post:url'等
+ * @param {(ATTable) => void} ref table 实例
+ * @param {boolean} disableReplaceUrl 默认情况下分页信息会带到 Url 上，如果不想可以使用这个参数禁用，比如 Modal 里面有个 Table，会和外面的 Table 冲突
  *
- * loading() // 显示loading
- * unloading() // 不显示loading
+ * @public {(keywords) => Promise} search keywords 是搜索栏选择的参数
+ * @public {() => Promise} refresh 返回一个Promise 刷新，保留当前面及搜索参数
+ * @public {(keywords) => Promise} pageTo 返回一个Promise 翻到指定页面
+ * @public {(keywords) => Promise} loading 显示 loading
+ * @public {(keywords) => Promise} unloading 隐藏 loading
  */
-class AutoTable extends React.Component {
+class ATTable extends React.Component {
+  state = {
+    loading: true,
+    dataSource: [],
+  }
+
   constructor(props) {
     super(props)
 
-    this.state = {
-      loading: true,
-      dataSource: [],
-    }
+    // 开始初始化
+    const { initialPageNum, pageSize, pageSizeName, pageNumName, listName, totalName } = props
 
-    // 定义翻页参数
-    const s = this._search
+    // 当前页
+    this.skip = this._search[pageNumName] || initialPageNum || 1
+    // 当前页大小
+    this.limit = pageSize || 10
+    // 总数
+    this.count = 0
 
-    this.skip = s._p || props.initialPageNum || 1 // 页
-    this.limit = props.pageSize || 10 // 页大小
-    this.count = 0 // 数据总数
-
-    // 定义搜索关键字
-    const keyword = {
-      ...s,
-      ...props.keyword,
-    }
-    delete keyword._p
-    this.keyword = keyword
-
-    // 定义参数名称
-    this.pageSize = props.pageSizeName || 'pageSize'
-    this.pageNum = props.pageNumName || 'pageNo'
-    this.list = props.listName || 'list'
-    this.total = props.totalName || 'total'
+    // 初始化参数名称
+    this.pageSizeName = pageSizeName || 'pageSize'
+    this.pageNumName = pageNumName || 'pageNo'
+    this.listName = listName || 'list'
+    this.totalName = totalName || 'total'
   }
 
   componentDidMount() {
@@ -79,78 +72,68 @@ class AutoTable extends React.Component {
     })
   }
 
-  // unloading
+  // unLoading
   unloading = () => {
     this.setState({
       loading: false,
     })
   }
 
-  // 搜索，外部通过ref调用
-  search = (keyword = {}) => {
-    let kw = {}
-    // 做一次过滤
-    Object.entries(keyword).forEach(([k, v]) => {
-      if (typeof v !== 'undefined' && v !== '') {
-        if (v._isAMomentObject) {
-          kw[k] = v.valueOf()
-        } else {
-          kw[k] = v
-        }
+  // 搜索
+  search = (keywords = {}) => {
+    // eslint-disable-next-line no-undefined
+    keywords = _.pickBy(keywords, v => v !== undefined && v !== '')
+
+    keywords = _.mapValues(keywords, v => {
+      if (v._isAMomentObject) {
+        return v.valueOf()
       }
+      return v
     })
 
-    return new Promise((resolve, reject) => {
-      this.keyword = kw
-      this.skip = 1
-      this.count = 0
-      resolve(this.fetchData())
-    })
+    this.keywords = keywords
+    return this.pageTo(1)
   }
 
-  // 刷新，外部通过ref调用
+  // 刷新
   refresh = () => {
-    return new Promise((resolve, reject) => {
-      resolve(this.fetchData())
-    })
+    return this.fetchData()
   }
 
-  // 翻到指定页面，外部通过ref调用
+  // 翻到指定页面
   pageTo = num => {
-    return new Promise((resolve, reject) => {
-      this.skip = num
-      this.count = 0
-      resolve(this.fetchData())
-    })
+    this.skip = num
+    this.count = 0
+    this.repalceUrlWithPageNum()
+    return this.fetchData()
   }
 
   // 请求数据
-  fetchData = async e => {
+  fetchData = async () => {
     try {
-      this.setState({
-        loading: true,
-      })
+      this.loading()
 
-      // 处理接口与请求方式
-      let api = this.props.api
+      const { api, afterFetch } = this.props
+      let url = api
       let method = 'get'
+      // 支持 post:api
       if (api.indexOf(':') !== -1) {
         const v = api.split(':')
-        api = v[1]
+        url = v[1]
         method = v[0]
       }
 
-      // 处理数据
+      // 处理接口参数
       const data = {
-        [this.pageSize]: this.limit,
-        [this.pageNum]: this.skip,
-        ...this.keyword,
+        [this.pageSizeName]: this.limit,
+        [this.pageNumName]: this.skip,
+        ...this.keywords,
       }
 
       // 整合请求参数
       const request = {
-        method: method,
-        url: api,
+        method,
+        url,
       }
       if (method.toLowerCase() === 'get') {
         request.params = data
@@ -159,48 +142,37 @@ class AutoTable extends React.Component {
       }
 
       // 请求数据
-      let res = await http.request(request)
+      let result = await http.request(request)
 
       // 如果请求到数据是个妈逼的null，但那帮傻缺又返回接口调用成功时
-      if (!res || !res[this.list] || !res[this.list].length) {
-        res = {
-          [this.pageNum]: this.skip,
-          [this.pageSize]: this.limit,
-          [this.total]: 0,
-          [this.list]: [],
+      if (!result || !result[this.listName] || !result[this.listName].length) {
+        result = {
+          [this.pageNumName]: this.skip,
+          [this.pageSizeName]: this.limit,
+          [this.totalName]: 0,
+          [this.listName]: [],
         }
       }
 
       // 将页信息存入
-      this.skip = res[this.pageNum]
-      this.limit = res[this.pageSize]
-      this.count = res[this.total]
+      // this.skip = result[this.pageNumName]
+      // this.limit = result[this.pageSizeName]
+      this.count = result[this.totalName]
 
       // 数据存入，重渲
       this.setState({
-        dataSource: res[this.list],
+        dataSource: result[this.listName],
       })
-
-      // 更新页面search
-      if (window.history && window.history.replaceState) {
-        const s = {
-          ...this.keyword,
-        }
-        s._p = this.skip
-        const url = window.location.pathname + '?' + qs.stringify(s)
-        window.history.replaceState(null, '', url)
-      }
 
       // 如果有回调狗子，执行它
-      if (this.props.afterFetch) {
-        this.props.afterFetch(res)
+      if (afterFetch) {
+        afterFetch(result)
       }
     } catch (e) {
-      Message.error(e.msg)
+      console.error('ATTable(fetchData)-error', e)
+      message.error(e.msg || '系统错误')
     } finally {
-      this.setState({
-        loading: false,
-      })
+      this.unloading()
     }
   }
 
@@ -208,7 +180,57 @@ class AutoTable extends React.Component {
   onChange = e => {
     this.limit = e.pageSize
     this.skip = e.current
+    this.repalceUrlWithPageNum()
     this.fetchData()
+  }
+
+  // 分页信息存到 Url 上
+  repalceUrlWithPageNum = () => {
+    const { disableReplaceUrl } = this.props
+
+    if (disableReplaceUrl) {
+      return
+    }
+    window.history.replaceState(
+      null,
+      '',
+      `?${qs.stringify({
+        [this.pageNumName]: this.skip,
+      })}`,
+    )
+  }
+
+  transformColumns = () => {
+    const { columns } = this.props
+
+    if (!columns || !columns.length) {
+      return []
+    }
+
+    return columns.map(column => {
+      const { data, render, renderConsole, ...otherData } = column
+      const customData = data.split(',').map(res => res.trim())
+
+      // renderConsole 如果有则认为是操作栏，自动加上 `fixed: right` 属性
+      const consoleDefualt = renderConsole
+        ? {
+            fixed: 'right',
+          }
+        : {}
+
+      return {
+        ...consoleDefualt,
+        title: customData[0],
+        dataIndex: customData[1],
+        align: 'center',
+        render: (text, record, index) => {
+          if (render) return render(text, record, index)
+          if (renderConsole) return renderConsole(record, index)
+          return text
+        },
+        ...otherData,
+      }
+    })
   }
 
   get _search() {
@@ -216,54 +238,6 @@ class AutoTable extends React.Component {
   }
 
   render() {
-    const cols = []
-
-    if (this.props.columns && this.props.columns.length) {
-      for (let i = 0; i < this.props.columns.length; i++) {
-        const it = this.props.columns[i]
-        const data = (it.data || '').split(',').map(res => res.trim())
-
-        const item = {
-          title: data[0],
-          key: data[1],
-          className: it.className || `auto-table-item__${data[1]}`,
-          dataIndex: data[1],
-        }
-
-        // 这项是数字
-        data[2] = data[2] - 0
-        if (data[2] === ~~data[2]) {
-          item.width = data[2]
-        } else if (['left', 'center', 'right'].indexOf(data[2]) !== -1) {
-          item.align = data[2]
-        }
-        if (['left', 'center', 'right'].indexOf(data[3]) !== -1) {
-          item.align = data[3]
-        }
-
-        if (it.render) {
-          item.render = it.render
-        } else {
-          item.render = e => {
-            return typeof e !== 'undefined' && e !== null ? e : '-'
-          }
-        }
-
-        if (it.renderConsole) {
-          item.render = (e, d) => {
-            const list = it.renderConsole(d) || null
-            return <div className="auto-table__console">{list}</div>
-          }
-        }
-
-        if (it.fixed) {
-          item.fixed = it.fixed
-        }
-
-        cols.push(item)
-      }
-    }
-
     // 过滤封装组件的props，剩下的给table组件
     const tableProps = ignore(this.props, [
       'columns',
@@ -274,42 +248,30 @@ class AutoTable extends React.Component {
       'pageNumName',
       'totalName',
       'afterFetch',
-      'keyword',
-      'rowKey',
+      'keywords',
       'api',
       'ref',
+      'disableReplaceUrl',
     ])
 
-    const css = classnames('auto-table', this.props.className)
-
     return (
-      <div className={css}>
-        <Table
-          dataSource={this.state.dataSource}
-          columns={cols}
-          onChange={this.onChange}
-          rowKey={this.props.rowKey || 'id'}
-          loading={this.state.loading}
-          scroll={{ x: 'max-content', scrollToFirstRowOnChange: true }}
-          pagination={{
-            defaultCurrent: 1,
-            current: this.skip,
-            pageSize: this.limit,
-            total: this.count,
-          }}
-          locale={{
-            emptyText: (
-              <p className="empty-text">
-                <Icon type="frown-o" />
-                暂无数据
-              </p>
-            ),
-          }}
-          {...tableProps}
-        />
-      </div>
+      <Table
+        dataSource={this.state.dataSource}
+        columns={this.transformColumns()}
+        onChange={this.onChange}
+        loading={this.state.loading}
+        scroll={{ x: 'max-content', scrollToFirstRowOnChange: true }}
+        pagination={{
+          defaultCurrent: 1,
+          current: ~~this.skip,
+          pageSize: ~~this.limit,
+          total: ~~this.count,
+        }}
+        rowKey="id"
+        {...tableProps}
+      />
     )
   }
 }
 
-export default AutoTable
+export default ATTable

@@ -1,130 +1,70 @@
 import React from 'react'
-import { Message, Input, Form, Col, Row, Spin, Button, Icon } from 'antd'
-import './style'
-import qs from 'qs'
-import classnames from 'classnames'
-import moment from 'moment'
+import { Input, Form, Col, Row, Spin, Button, Icon, Divider, message } from 'antd'
 
 /**
- * 参数
- * columns 数据骨架Object
- * columns.title 显示的标题
- * columns.key 字段名称
- * columns.initialValue 默认值
- * columns.render 渲染组件，默认为Input组件
- * columns.span 重写分栏的宽度，会覆盖colSpan的值
- * colSpan 分栏，默认为6，即24 / 6 = 4，一行显示4个
- * initialItemCount 默认显示的选项个数（按columns排序），超出部分将隐藏，点击展开按钮时才显示
- * onSearch 表单提交时的方法，需返回一个promise实例，reject传递报错信息文字，无错误时resolve，然后执行相关的操作
- * onReset 表单重置的回调
+ *
+ *
+ * @class ATSearchBar
+ * 基于 https://ant.design/components/form-cn/ 二次封装
+ * @extends {React.Component}
+ *
+ * @param {column[]} columns 数据结构
+ * @param {string} column.title 标题
+ * @param {string} column.key 传给后台的 key，一般对应着搜索参数
+ * @param {(fields) => React.ReactNode} column.render 自定义渲染（默认是 Input）,参数是当前搜索栏所有的数据集合
+ * @param {number} column.span 分栏，默认是 6，Grid 基于 24 栅格，所以默认是每行 4 个
+ * @param {number} column.initialItemCount 展示的数量，默认是 8，可展示两行
+ * 其余参数见 https://ant.design/components/form-cn/#getFieldDecorator(id,-options)-%E5%8F%82%E6%95%B0
+ *
+ * @param {(data) => Promise} onSearch 搜索函数，参数是输入的集合，返回 Promise 可以展示 Loading
+ * @param {() => Promise} onReset 重置函数，返回 Promise 可以展示 Loading
  */
-
 @Form.create()
-class AutoSearchBar extends React.Component {
-  constructor(props) {
-    super(props)
-
-    const columns = props.columns ? props.columns : []
-    const fileds = {}
-
-    columns.forEach(res => {
-      fileds[res.key] = {
-        value: res.initialValue,
-      }
-    })
-
-    this.state = {
-      down: false,
-      loading: false,
-      initialItemCount:
-        props.initialItemCount && ~~props.initialItemCount === props.initialItemCount
-          ? props.initialItemCount
-          : 4,
-      initialFileds: fileds,
-    }
+class ATSearchBar extends React.Component {
+  static defaultProps = {
+    initialItemCount: 8,
   }
 
-  createItem = ({ title, render, initialValue, key, span }, layout = {}) => {
-    const { getFieldDecorator, getFieldsValue } = this.props.form
-
-    // render默认为input输入框
-    if (!render) {
-      render = () => <Input placeholder={`请输入${title}`} />
-    }
-
-    // 初始化值
-    let val
-    if (typeof initialValue !== 'undefined') {
-      val = {
-        initialValue,
-      }
-    }
-
-    // 得到组件，若组件没有会生成不了相应的value，导致一直出不来，所以组件返回null时就渲染一个空div
-    const comp = render(getFieldsValue())
-
-    const colSpan =
-      span && ~~span === span
-        ? span
-        : this.props.colSpan && ~~this.props.colSpan === this.props.colSpan
-        ? this.props.colSpan
-        : 6
-
-    if (!comp) {
-      return null
-    }
-
-    // to moment
-    if (comp.type && comp.type.name === 'PickerWrapper') {
-      if (val && val.initialValue && typeof val.initialValue === 'string') {
-        val.initialValue = moment(val.initialValue - 0)
-      } else if (!val) {
-        val = {
-          initialValue: '',
-        }
-      }
-    }
-
-    return (
-      <Col span={colSpan} key={key}>
-        <Form.Item {...layout} label={title} className={`form-item__${key}`}>
-          {getFieldDecorator(key, val)(comp)}
-        </Form.Item>
-      </Col>
-    )
+  state = {
+    down: false,
+    loading: false,
   }
 
-  onSubmit = e => {
+  onSubmit = async e => {
     e.preventDefault()
-    this.props.form.validateFields(async (err, values) => {
-      try {
-        this.setState({
-          loading: true,
-        })
+    try {
+      this.setState({
+        loading: true,
+      })
 
-        if (err) {
-          throw new Error('系统错误')
-        }
-        if (this.props.onSearch) {
-          await this.props.onSearch(values)
-        }
-      } catch (e) {
-        if (typeof e === 'string') {
-          Message.error(e)
-        } else {
-          Message.error(e.msg || e.message)
-        }
-      } finally {
-        this.setState({
-          loading: false,
-        })
-      }
-    })
+      const { form, onSearch } = this.props
+
+      const values = await form.validateFieldsAndScroll()
+      await onSearch(values)
+    } catch (error) {
+      message.error(error.msg)
+    } finally {
+      this.setState({
+        loading: false,
+      })
+    }
   }
 
-  onReset = e => {
-    this.props.form.setFields(this.state.initialFileds)
-    this.props.onReset && this.props.onReset()
+  onReset = async e => {
+    try {
+      this.setState({
+        loading: true,
+      })
+      const { onReset, form } = this.props
+      onReset && (await onReset())
+      await form.resetFields()
+    } catch (error) {
+      console.error('ATSearch:onReset-error', error)
+    } finally {
+      this.setState({
+        loading: false,
+      })
+    }
   }
 
   toggleUpDown = e => {
@@ -133,88 +73,79 @@ class AutoSearchBar extends React.Component {
     })
   }
 
+  transformColumns = () => {
+    const { columns, initialItemCount } = this.props
+    const { down } = this.state
+
+    if (!columns || !columns.length) {
+      return null
+    }
+    let cols = []
+
+    cols = columns.map(column => {
+      const { title, render, key, span, ...options } = column
+      const { getFieldDecorator, getFieldsValue } = this.props.form
+
+      // Render 默认为输入框
+      const Component = render ? render(getFieldsValue()) : <Input placeholder={`请输入${title}`} />
+
+      return (
+        <Col span={span || 6} key={key}>
+          <Form.Item label={title}>{getFieldDecorator(key, options)(Component)}</Form.Item>
+        </Col>
+      )
+    })
+
+    // 超出 initialItemCount 数量的隐藏
+    if (!down) {
+      cols = cols.slice(0, initialItemCount)
+    }
+
+    return cols
+  }
+
   renderSubmit() {
+    const { columns, initialItemCount } = this.props
+
     return (
-      <Row gutter={24} className="auto-search-bar__submit">
-        <Col span={24}>
-          <Button type="primary" htmlType="submit">
-            {!this.state.loading ? <Icon type="search" /> : <Icon type="loading" />}
+      <Row type="flex" justify="end" gutter={12}>
+        <Col>
+          <Button type="primary" htmlType="submit" icon="search">
             搜索
           </Button>
-          <Button type="default" onClick={this.onReset} disabled={this.state.loading}>
+        </Col>
+        <Col>
+          <Button type="default" onClick={this.onReset}>
             重置
           </Button>
-          {this.props.addonButton && this.props.addonButton()}
-          {this.props.columns.length > this.state.initialItemCount && (
-            <a href="javascript:;" className="auto-search-bar__up-down" onClick={this.toggleUpDown}>
+        </Col>
+        {columns.length > initialItemCount && (
+          <Col>
+            <Button onClick={this.toggleUpDown} type="link">
               {this.state.down ? '收起 ' : '展开 '}
               {this.state.down ? (
                 <Icon type="up" style={{ fontSize: 12 }} />
               ) : (
                 <Icon type="down" style={{ fontSize: 12 }} />
               )}
-            </a>
-          )}
-        </Col>
+            </Button>
+          </Col>
+        )}
       </Row>
     )
   }
 
-  get _search() {
-    return window.location.search ? qs.parse(window.location.search.replace(/^\?/, '')) : {}
-  }
-
   render() {
-    let cols = []
-
-    const s = this._search || {}
-    if (this.props.columns && this.props.columns.length) {
-      // 把所有组件的从props中整理出来
-      const columns = []
-      this.props.columns.forEach(res => {
-        columns.push({ ...res })
-      })
-
-      // 把所有组件的值赋进去，包括search上的值
-      // 然后再把值都存到一个对象中，在下面一个循环中需要使用
-      const values = {}
-      for (let i = 0; i < columns.length; i++) {
-        const it = columns[i]
-        it.initialValue = s[it.key] ? s[it.key] : it.initialValue
-        values[it.key] = it.initialValue
-      }
-
-      // 循环所有组件查看其是否有value方法，如果有则调用它
-      // 然后创建这些组件
-      for (let i = 0; i < columns.length; i++) {
-        const it = columns[i]
-        if (typeof it.value === 'function') {
-          it.initialValue = it.value(it.initialValue, values)
-        }
-        const item = this.createItem(it)
-        if (item) {
-          cols.push(item)
-        }
-      }
-    }
-
-    if (!this.state.down) {
-      cols = cols.slice(0, this.state.initialItemCount)
-    }
-
-    const css = classnames('auto-search-bar', this.props.className)
-
     return (
-      <div className={css}>
-        <Spin spinning={this.state.loading === true}>
-          <Form onSubmit={this.onSubmit}>
-            <Row gutter={24}>{cols}</Row>
-            {this.renderSubmit()}
-          </Form>
-        </Spin>
-      </div>
+      <Spin spinning={this.state.loading}>
+        <Form onSubmit={this.onSubmit}>
+          <Row gutter={24}>{this.transformColumns()}</Row>
+          {this.renderSubmit()}
+        </Form>
+        <Divider dashed />
+      </Spin>
     )
   }
 }
 
-export default AutoSearchBar
+export default ATSearchBar

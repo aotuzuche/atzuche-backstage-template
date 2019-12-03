@@ -1,7 +1,7 @@
 import React from 'react'
 import appConfig from '../../appConfig'
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
-import { LocaleProvider } from 'antd'
+import { ConfigProvider } from 'antd'
 import zh_CN from 'antd/lib/locale-provider/zh_CN'
 import App from './app'
 import HomeView from '../views/home'
@@ -10,14 +10,14 @@ import HomeView from '../views/home'
 const Routes = e => {
   return (
     <BrowserRouter basename={appConfig.basename}>
-      <LocaleProvider locale={zh_CN}>
+      <ConfigProvider locale={zh_CN}>
         <App>
           <Switch>
             <Route path="/" component={HomeView} />
             <Redirect to="/" />
           </Switch>
         </App>
-      </LocaleProvider>
+      </ConfigProvider>
     </BrowserRouter>
   )
 }
