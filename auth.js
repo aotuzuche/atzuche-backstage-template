@@ -21,7 +21,7 @@ task()
 async function task() {
   const files = await fileList(path.resolve(dir))
   const queue = []
-  files.forEach((v) => {
+  files.forEach(v => {
     queue.push(readFile(v))
   })
   const results = await Promise.all(queue)
@@ -81,7 +81,7 @@ function getResourceContent(source = []) {
       2,
     )
   }
-  return yaml.stringify({ resource: source.map((item) => item.slice(0, 3)) }, 2, 2)
+  return yaml.stringify({ resource: source.map(item => item.slice(0, 3)) }, 2, 2)
 }
 
 function getFunctionContent(source, oldFunction = {}) {
@@ -100,10 +100,10 @@ function getFunctionContent(source, oldFunction = {}) {
     )
   }
   const result = {}
-  source.forEach((item) => {
+  source.forEach(item => {
     const resourceName = item[0]
     const functionArr = item[3].split(',')
-    functionArr.forEach((func) => {
+    functionArr.forEach(func => {
       if (result[func]) {
         result[func].resource.push(resourceName)
       } else {
@@ -124,7 +124,7 @@ function readFile(path) {
       const results = []
       const mathch = data.match(chunkReg)
       mathch &&
-        mathch.forEach((v) => {
+        mathch.forEach(v => {
           const name = v.match(nameReg) && v.match(nameReg)[0].replace(/@name /, '')
           const method =
             v.match(methodReg) &&
@@ -176,7 +176,7 @@ function readDir(filePath) {
             queue.push(readDir(filedir))
           }
         })
-        Promise.all(queue).then((res) => {
+        Promise.all(queue).then(res => {
           resolve(results.concat(...res))
         })
       }
