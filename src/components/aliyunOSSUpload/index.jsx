@@ -94,7 +94,7 @@ export default class AliyunOSSUpload extends React.Component {
   }
 
   render() {
-    const { value, onChange, ticket, ...otherProps } = this.props
+    const { value, onChange, ticket, children, ...otherProps } = this.props
     const props = {
       name: 'file',
       fileList: value,
@@ -108,9 +108,11 @@ export default class AliyunOSSUpload extends React.Component {
     }
     return (
       <Upload {...props}>
-        <Button>
-          <Icon type="upload" /> Click to Upload
-        </Button>
+        {children || (
+          <Button>
+            <Icon type="upload" /> 上传
+          </Button>
+        )}
       </Upload>
     )
   }
