@@ -1,6 +1,6 @@
 import React from 'react'
 import { Message } from 'antd'
-import http from 'src/utils/http'
+import { httpConsole } from 'auto-libs'
 import qs from 'qs'
 
 // 放缓存的容器
@@ -74,7 +74,7 @@ class Fetch extends React.Component {
       }
 
       // 请求数据
-      const res = await http.request(request)
+      const res = await httpConsole.request(request)
 
       // 数据存入，重渲
       this.setState({

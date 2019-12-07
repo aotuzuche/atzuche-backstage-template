@@ -1,6 +1,6 @@
 import React from 'react'
 import { Spin, Row, Col, Form, Button, Message, Input, Icon } from 'antd'
-import http from 'src/utils/http'
+import { httpConsole } from 'auto-libs'
 import './style'
 import classnames from 'classnames'
 
@@ -81,7 +81,7 @@ class AutoForm extends React.Component {
       }
 
       // 请求数据
-      const res = await http.request(request)
+      const res = await httpConsole.request(request)
 
       // 全部存入
       this.dataSource = res
@@ -182,7 +182,7 @@ class AutoForm extends React.Component {
       }
 
       // 请求数据
-      const res = await http.request(request)
+      const res = await httpConsole.request(request)
 
       // 后续处理
       Message.success('提交成功')

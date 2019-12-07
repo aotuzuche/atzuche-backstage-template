@@ -1,6 +1,6 @@
 import './style'
 import React from 'react'
-import { clearToken } from '../../utils/token'
+import { clearToken } from 'auto-libs'
 import { Layout, Icon } from 'antd'
 
 class HeaderView extends React.PureComponent {
