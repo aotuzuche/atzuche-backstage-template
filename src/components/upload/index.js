@@ -1,5 +1,5 @@
 import React from 'react'
-import $http from 'src/utils/http'
+import { httpConsole } from 'auto-libs'
 import './style'
 import { message, Popconfirm, Icon, Button } from 'antd'
 import cdn from 'src/conf/cdn'
@@ -28,7 +28,7 @@ class Upload extends React.PureComponent {
         method = v[0]
       }
 
-      let res = await $http.request({
+      let res = await httpConsole.request({
         url: api,
         method: method,
       })

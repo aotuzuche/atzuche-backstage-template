@@ -40,10 +40,8 @@
 │   ├── template.html
 │   ├── utils # 公用方法
 │   │   ├── deepFind.js
-│   │   ├── http.js
 │   │   ├── ignoreProps.js
-│   │   ├── menuHandles.js
-│   │   └── token.js
+│   │   └── menuHandles.js
 │   └── views # 页面模块
 │       └── home
 └── yarn.lock

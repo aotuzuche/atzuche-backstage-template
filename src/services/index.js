@@ -1,8 +1,8 @@
-import http from '../utils/http'
+import { httpConsole } from 'auto-libs'
 
 const fetchSystemMenu = payload => {
-  return http.request({
-    url: `/auth/console/auth/menu/${payload.syscode}`,
+  return httpConsole.request({
+    url: `/apigateway/auth/console/auth/menu/${payload.syscode}`,
     method: 'GET',
   })
 }
