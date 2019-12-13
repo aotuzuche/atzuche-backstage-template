@@ -214,8 +214,8 @@ class ATTable extends React.Component {
       // renderConsole 如果有则认为是操作栏，自动加上 `fixed: right` 属性
       const consoleDefualt = renderConsole
         ? {
-            fixed: 'right',
-          }
+          fixed: 'right',
+        }
         : {}
 
       return {
@@ -224,7 +224,7 @@ class ATTable extends React.Component {
         dataIndex: customData[1],
         align: 'center',
         render: (text, record, index) => {
-          const textData = typeof text !== 'undefined' && text !== null ? text : '-'
+          const textData = text !== undefined && text !== null ? text : '-'
           if (render) return render(textData, record, index)
           if (renderConsole) return renderConsole(record, index)
           return textData
