@@ -224,9 +224,10 @@ class ATTable extends React.Component {
         dataIndex: customData[1],
         align: 'center',
         render: (text, record, index) => {
-          if (render) return render(text, record, index)
+          const textData = text !== void 0 && text !== null ? text : '-'
+          if (render) return render(textData, record, index)
           if (renderConsole) return renderConsole(record, index)
-          return text
+          return textData
         },
         ...otherData,
       }
