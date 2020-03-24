@@ -29,7 +29,7 @@
     ]
   },
   "dependencies": {
-    "antd": "^3.24.2",
+    "antd": "^4.0.4",
     "auto-libs": "^0.1.82",
     "dva-core": "^1.4.0",
     "lodash": "^4.17.15",
