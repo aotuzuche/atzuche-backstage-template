@@ -12,6 +12,8 @@ const Routes = e => {
     <BrowserRouter basename={appConfig.basename}>
       <ConfigProvider locale={zh_CN}>
         <App>
+          <Route component={RouteChangeListener} />
+
           <Switch>
             <Route path="/" component={HomeView} />
             <Redirect to="/" />
