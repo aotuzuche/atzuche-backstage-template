@@ -1,28 +1,49 @@
-import React from 'react'
 import './style.scss'
+
+import React from 'react'
+import { Layout, Breadcrumb, message } from 'antd'
+import { connect } from 'react-redux'
 
 import Aside from '../components/aside'
 import Header from '../components/header'
-import { Layout, Breadcrumb, message } from 'antd'
-const { Content } = Layout
 import { getMenuPathInfos, findMenuPathIds } from '../utils/menuHandles'
-import { connect } from 'react-redux'
 import appConfig from '../../appConfig'
 import Tool from '../hoc/tool'
 
+const { Content } = Layout
+
+const dimensionMaxMap = {
+  xs: '479.98px',
+  sm: '575.98px',
+  md: '767.98px',
+  lg: '991.98px',
+  xl: '1199.98px',
+  xxl: '1599.98px',
+}
+
 @Tool
 class App extends React.PureComponent {
+  mql = null
+
   constructor(props) {
     super(props)
 
     this.state = {
       collapsed: false,
       loading: false,
+      below: false,
     }
+
+    this.initMediaQuery()
   }
 
   async componentDidMount() {
     try {
+      if (this.mql) {
+        this.mql.addListener(this.matchMediaAddListener)
+        this.matchMediaAddListener(this.mql)
+      }
+
       this.setState({
         loading: true,
       })
@@ -32,7 +53,6 @@ class App extends React.PureComponent {
       }
       await this.fetchMenu()
     } catch (e) {
-      console.error(e)
       message.error(e.msg || '系统错误，请稍后再试')
     } finally {
       this.setState({ loading: false })
@@ -44,6 +64,24 @@ class App extends React.PureComponent {
       const path = p.location.pathname
       this.updateBreadcrumb(path)
     }
+  }
+
+  initMediaQuery = () => {
+    let matchMedia
+    const { breakpoint = 'md' } = this.props
+    if (typeof window !== void 0) {
+      matchMedia = window.matchMedia
+    }
+
+    if (matchMedia && breakpoint in dimensionMaxMap) {
+      this.mql = matchMedia(`(max-width: ${dimensionMaxMap[breakpoint]})`)
+    }
+  }
+
+  matchMediaAddListener = mql => {
+    this.setState({
+      below: mql.matches,
+    })
   }
 
   // 菜单点击回调
@@ -101,8 +139,9 @@ class App extends React.PureComponent {
     })
   }
   render(props) {
-    const { menus, breadcrumb } = this.props.index
-    const { state } = this
+    const { children, index } = this.props
+    const { collapsed, below } = this.state
+    const { menus, breadcrumb } = index
     const len = breadcrumb && breadcrumb.length
     const renderBradcrumb = e => {
       return (
@@ -133,19 +172,19 @@ class App extends React.PureComponent {
 
     return (
       <Layout className="auto-wrapper">
-        <Aside
-          list={menus}
-          onMenuHandle={this.onMenuHandle}
-          collapsed={state.collapsed}
-          onCollapse={this.onCollapse}
-          defaultMenu={props.location.pathname}
-        />
+        {!below && (
+          <Aside
+            list={menus}
+            onMenuHandle={this.onMenuHandle}
+            collapsed={collapsed}
+            onCollapse={this.onCollapse}
+            defaultMenu={this.props.location.pathname}
+          />
+        )}
         <Layout>
-          <Header collapsed={state.collapsed} onCollapse={this.onCollapse} />
-
+          <Header collapsed={collapsed} onCollapse={this.onCollapse} />
           <div className="auto-breadcrumb">{renderBradcrumb()}</div>
-
-          <Content className="auto-mainbody">{this.props.children}</Content>
+          <Content className="auto-mainbody">{children}</Content>
         </Layout>
       </Layout>
     )

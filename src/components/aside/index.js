@@ -2,11 +2,10 @@ import './style'
 import appConfig from '../../../appConfig'
 import React from 'react'
 import { Layout, Menu, Icon, message } from 'antd'
+import { findMenuInfo, findMenuPathIds } from '../../utils/menuHandles'
 
 const { Sider } = Layout
 const { SubMenu } = Menu
-
-import { findMenuInfo, findMenuPathIds } from '../../utils/menuHandles'
 
 class AsideView extends React.PureComponent {
   constructor(props) {
@@ -30,6 +29,7 @@ class AsideView extends React.PureComponent {
       })
     }
   }
+
   // 菜单点击事件
   onMenuHandle = e => {
     try {
@@ -38,7 +38,6 @@ class AsideView extends React.PureComponent {
         this.props.onMenuHandle(_current.url)
       }
     } catch (e) {
-      console.error(e)
       message.error(e.msg || '系统异常')
     }
   }
@@ -137,14 +136,15 @@ class AsideView extends React.PureComponent {
   }
 
   render() {
-    const { props } = this
+    const { breakpoint = 'lg', collapsed, list } = this.props
+
     return (
       <Sider
         className="auto-sider"
         width="256"
         collapsedWidth="80"
-        breakpoint="xl"
-        collapsed={props.collapsed}
+        breakpoint={breakpoint}
+        collapsed={collapsed}
         onCollapse={this.onCollapse}
       >
         <div className="auto-logo">
@@ -164,7 +164,7 @@ class AsideView extends React.PureComponent {
             })
           }}
         >
-          {this.recursionMenu(props.list)}
+          {this.recursionMenu(list)}
         </Menu>
       </Sider>
     )
