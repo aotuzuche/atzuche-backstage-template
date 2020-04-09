@@ -41,7 +41,7 @@
   "devDependencies": {
     "autos": "^1.1.4",
     "babel-eslint": "^10.0.1",
-    "babel-preset-atzuche": "^0.0.2",
+    "babel-preset-atzuche": "^0.1.0",
     "eslint": "^6.7.2",
     "eslint-config-atzuche": "^0.0.15",
     "fs-extra": "^8.1.0",
