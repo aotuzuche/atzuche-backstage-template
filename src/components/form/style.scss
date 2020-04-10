@@ -22,3 +22,11 @@
     }
   }
 }
+
+.ant-form {
+  .ant-form-item-children {
+    .ant-calendar-picker, .ant-input-number {
+      width: 100%;
+    }
+  }
+}
