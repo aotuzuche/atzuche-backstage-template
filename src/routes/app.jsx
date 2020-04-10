@@ -3,13 +3,12 @@ import './style.scss'
 import React from 'react'
 import { Layout, Breadcrumb, message } from 'antd'
 import { connect } from 'react-redux'
-
+import { createPortal, render } from 'react-dom'
 import Aside from '../components/aside'
 import Header from '../components/header'
 import { getMenuPathInfos, findMenuPathIds } from '../utils/menuHandles'
 import appConfig from '../../appConfig'
 import Tool from '../hoc/tool'
-
 const { Content } = Layout
 
 const dimensionMaxMap = {
@@ -92,6 +91,24 @@ class App extends React.PureComponent {
 
   // 侧边栏回调
   onCollapse = e => {
+    if (this.state.below) {
+      const { menus } = this.props.index
+      const div = document.createElement('div')
+      document.body.appendChild(div)
+      render(
+        createPortal(
+          <Aside
+            list={menus}
+            onMenuHandle={this.onMenuHandle}
+            collapsed={false}
+            onCollapse={this.onCollapse}
+            defaultMenu={this.props.location.pathname}
+          />,
+          div,
+        ),
+        div,
+      )
+    }
     this.setState({
       collapsed: e,
     })
@@ -182,7 +199,7 @@ class App extends React.PureComponent {
           />
         )}
         <Layout>
-          <Header collapsed={collapsed} onCollapse={this.onCollapse} />
+          <Header breakpoint={below} collapsed={collapsed} onCollapse={this.onCollapse} />
           <div className="auto-breadcrumb">{renderBradcrumb()}</div>
           <Content className="auto-mainbody">{children}</Content>
         </Layout>

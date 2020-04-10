@@ -2,14 +2,18 @@ import './style'
 import React from 'react'
 import { clearToken } from 'auto-libs'
 import { Layout, Icon } from 'antd'
-
+import cn from 'classname'
 class HeaderView extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    this.userInfo = localStorage['auto_system_userData']
-      ? JSON.parse(localStorage['auto_system_userData'])
-      : {}
+    try {
+      this.userInfo = localStorage['auto_system_userData']
+        ? JSON.parse(localStorage['auto_system_userData'])
+        : {}
+    } catch (e) {
+      this.userInfo = {}
+    }
 
     const name = this.userInfo.loginName ? this.userInfo.loginName : ''
 
@@ -71,9 +75,18 @@ class HeaderView extends React.PureComponent {
   }
 
   render() {
-    const { state } = this
+    const { state, props } = this
+    const { breakpoint } = props
+    const className = cn('auto-header-bar', {
+      breakpoint: breakpoint,
+    })
     return (
-      <Layout.Header className="auto-header-bar">
+      <Layout.Header className={className}>
+        {breakpoint && (
+          <div className="auto-header-logo">
+            <img src="https://cdn.atzuche.com/static/images/icon-logo-green.png" alt="logo" />
+          </div>
+        )}
         <Icon
           type={'menu-' + state.triggerIcon}
           onClick={this.onTrigger}
