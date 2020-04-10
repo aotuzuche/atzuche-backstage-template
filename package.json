@@ -43,7 +43,7 @@
     "babel-eslint": "^10.0.1",
     "babel-preset-atzuche": "^0.0.2",
     "eslint": "^6.7.2",
-    "eslint-config-atzuche": "^0.0.15",
+    "eslint-config-atzuche": "^0.0.24",
     "fs-extra": "^8.1.0",
     "husky": "^3.1.0",
     "lint-staged": "^10.0.7",
