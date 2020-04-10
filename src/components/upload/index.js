@@ -121,7 +121,7 @@ class Upload extends React.PureComponent {
                 style={{ backgroundImage: `url(${cdn + '/' + this.props.value})` }}
               >
                 <Popconfirm okText="是" cancelText="否" title="确认删除吗？" onConfirm={this.onDel}>
-                  <a href="javascript:;">删除</a>
+                  <Button type="link">删除</Button>
                 </Popconfirm>
                 {this.props.thumbAddon && this.props.thumbAddon()}
               </div>
