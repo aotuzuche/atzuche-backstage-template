@@ -1,28 +1,20 @@
 import './style.scss'
-
 import React from 'react'
-import { Layout, Breadcrumb, message } from 'antd'
 import { connect } from 'react-redux'
-import { createPortal, render } from 'react-dom'
+import cn from 'classname'
+import { Layout, Breadcrumb, message } from 'antd'
+import ResponsiveObserve from 'antd/lib/_util/responsiveObserve'
 import Aside from '../components/aside'
 import Header from '../components/header'
 import { getMenuPathInfos, findMenuPathIds } from '../utils/menuHandles'
 import appConfig from '../../appConfig'
 import Tool from '../hoc/tool'
-const { Content } = Layout
 
-const dimensionMaxMap = {
-  xs: '479.98px',
-  sm: '575.98px',
-  md: '767.98px',
-  lg: '991.98px',
-  xl: '1199.98px',
-  xxl: '1599.98px',
-}
+const { Content } = Layout
 
 @Tool
 class App extends React.PureComponent {
-  mql = null
+  mediascreen = null
 
   constructor(props) {
     super(props)
@@ -30,22 +22,30 @@ class App extends React.PureComponent {
     this.state = {
       collapsed: false,
       loading: false,
-      below: false,
+      fixedAside: false,
+      screens: {
+        xs: true,
+        sm: true,
+        md: true,
+        lg: true,
+        xl: true,
+        xxl: true,
+      },
     }
-
-    this.initMediaQuery()
   }
 
   async componentDidMount() {
     try {
-      if (this.mql) {
-        this.mql.addListener(this.matchMediaAddListener)
-        this.matchMediaAddListener(this.mql)
-      }
+      this.mediascreen = ResponsiveObserve.subscribe(screens => {
+        this.setState({
+          screens,
+        })
+      })
 
       this.setState({
         loading: true,
       })
+
       // 如果已经是pathname则不需要一直请求，dev上会无限循环
       if (this.props.location.pathname === '/system/login') {
         return
@@ -65,22 +65,8 @@ class App extends React.PureComponent {
     }
   }
 
-  initMediaQuery = () => {
-    let matchMedia
-    const { breakpoint = 'md' } = this.props
-    if (typeof window !== void 0) {
-      matchMedia = window.matchMedia
-    }
-
-    if (matchMedia && breakpoint in dimensionMaxMap) {
-      this.mql = matchMedia(`(max-width: ${dimensionMaxMap[breakpoint]})`)
-    }
-  }
-
-  matchMediaAddListener = mql => {
-    this.setState({
-      below: mql.matches,
-    })
+  componentWillUnmount() {
+    ResponsiveObserve.unsubscribe(this.mediascreen)
   }
 
   // 菜单点击回调
@@ -90,27 +76,10 @@ class App extends React.PureComponent {
   }
 
   // 侧边栏回调
-  onCollapse = e => {
-    if (this.state.below) {
-      const { menus } = this.props.index
-      const div = document.createElement('div')
-      document.body.appendChild(div)
-      render(
-        createPortal(
-          <Aside
-            list={menus}
-            onMenuHandle={this.onMenuHandle}
-            collapsed={false}
-            onCollapse={this.onCollapse}
-            defaultMenu={this.props.location.pathname}
-          />,
-          div,
-        ),
-        div,
-      )
-    }
+  onCollapse = (e, breakpoint) => {
     this.setState({
       collapsed: e,
+      fixedAside: breakpoint && !e,
     })
   }
 
@@ -145,7 +114,7 @@ class App extends React.PureComponent {
   }
 
   // 更新面包屑
-  async updateBreadcrumb(path) {
+  updateBreadcrumb = async path => {
     const { props } = this
     const ids = findMenuPathIds(path, this.props.index.menus)
     const breadcrumb = getMenuPathInfos(ids, this.props.index.menus)
@@ -155,41 +124,50 @@ class App extends React.PureComponent {
       payload: { breadcrumb },
     })
   }
+
+  renderBreadcrumb = () => {
+    const {
+      index: { breadcrumb },
+    } = this.props
+    const len = breadcrumb && breadcrumb.length
+    return (
+      <Breadcrumb>
+        <Breadcrumb.Item>首页</Breadcrumb.Item>
+        {breadcrumb &&
+          breadcrumb.map((item, index) => {
+            return (
+              <Breadcrumb.Item key={item.id}>
+                {len - 1 === index || !item.url ? (
+                  <span>{item.name}</span>
+                ) : (
+                  <a
+                    onClick={() => {
+                      this.props.history.push(item.url)
+                    }}
+                    herf="javascript;;"
+                  >
+                    {item.name}
+                  </a>
+                )}
+              </Breadcrumb.Item>
+            )
+          })}
+      </Breadcrumb>
+    )
+  }
+
   render(props) {
     const { children, index } = this.props
-    const { collapsed, below } = this.state
-    const { menus, breadcrumb } = index
-    const len = breadcrumb && breadcrumb.length
-    const renderBradcrumb = e => {
-      return (
-        <Breadcrumb>
-          <Breadcrumb.Item>首页</Breadcrumb.Item>
-          {breadcrumb &&
-            breadcrumb.map((item, index) => {
-              return (
-                <Breadcrumb.Item key={item.id}>
-                  {len - 1 === index || !item.url ? (
-                    <span>{item.name}</span>
-                  ) : (
-                    <a
-                      onClick={() => {
-                        this.props.history.push(item.url)
-                      }}
-                      herf="javascript;;"
-                    >
-                      {item.name}
-                    </a>
-                  )}
-                </Breadcrumb.Item>
-              )
-            })}
-        </Breadcrumb>
-      )
-    }
-
+    const { collapsed, screens, fixedAside } = this.state
+    const { menus } = index
+    const siderClassName = cn('auto-sider-wrapper', {
+      fixedAside,
+      hidden: !screens.md && !fixedAside,
+    })
     return (
       <Layout className="auto-wrapper">
-        {!below && (
+        <div className={siderClassName}>
+          <div className="auto-sider-wrapper-masker" />
           <Aside
             list={menus}
             onMenuHandle={this.onMenuHandle}
@@ -197,10 +175,10 @@ class App extends React.PureComponent {
             onCollapse={this.onCollapse}
             defaultMenu={this.props.location.pathname}
           />
-        )}
+        </div>
         <Layout>
-          <Header breakpoint={below} collapsed={collapsed} onCollapse={this.onCollapse} />
-          <div className="auto-breadcrumb">{renderBradcrumb()}</div>
+          <Header breakpoint={!screens.md} collapsed={collapsed} onCollapse={this.onCollapse} />
+          <div className="auto-breadcrumb">{this.renderBreadcrumb()}</div>
           <Content className="auto-mainbody">{children}</Content>
         </Layout>
       </Layout>

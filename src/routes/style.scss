@@ -1,6 +1,7 @@
 .auto-wrapper {
   overflow: hidden;
   position: relative;
+  min-height: 100vh;
 }
 
 .auto-mainbody {
@@ -17,4 +18,31 @@
   padding: 15px 0 15px 30px;
   background: #fff;
   border-bottom: 1px solid #f0f0f0;
+}
+
+.auto-sider-wrapper {
+  &.hidden {
+    display: none;
+  }
+  &.fixedAside {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    .auto-sider-wrapper-masker {
+      display: block;
+    }
+  }
+
+  &-masker {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 }

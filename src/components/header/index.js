@@ -3,6 +3,7 @@ import React from 'react'
 import { clearToken } from 'auto-libs'
 import { Layout, Icon } from 'antd'
 import cn from 'classname'
+
 class HeaderView extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -16,7 +17,6 @@ class HeaderView extends React.PureComponent {
     }
 
     const name = this.userInfo.loginName ? this.userInfo.loginName : ''
-
     const now = new Date()
     const hour = now.getHours()
     let hello = ''
@@ -43,7 +43,7 @@ class HeaderView extends React.PureComponent {
     }
 
     this.state = {
-      triggerIcon: 'fold',
+      triggerIcon: 'unfold',
       loginName: name,
       hello,
     }
@@ -53,14 +53,15 @@ class HeaderView extends React.PureComponent {
     if (this.props.collapsed !== props.collapsed) {
       // eslint-disable-next-line react/no-will-update-set-state
       this.setState({
-        triggerIcon: props.collapsed ? 'unfold' : 'fold',
+        triggerIcon: props.collapsed ? 'fold' : 'unfold',
       })
     }
   }
 
   // 点击ICon菜单收起或者展开
   onTrigger = () => {
-    this.props.onCollapse && this.props.onCollapse(!this.props.collapsed)
+    const { breakpoint } = this.props
+    this.props.onCollapse && this.props.onCollapse(!this.props.collapsed, breakpoint)
   }
 
   onGoMain = () => {
