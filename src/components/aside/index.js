@@ -1,44 +1,72 @@
 import './style'
 import appConfig from '../../../appConfig'
 import React from 'react'
+import cn from 'classname'
 import { Layout, Menu, Icon, message } from 'antd'
+import { findMenuInfo, findMenuPathIds } from '../../utils/menuHandles'
 
 const { Sider } = Layout
 const { SubMenu } = Menu
 
-import { findMenuInfo, findMenuPathIds } from '../../utils/menuHandles'
-
 class AsideView extends React.PureComponent {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { defaultMenu, list } = nextProps
+
+    if (list && (defaultMenu !== prevState.defaultMenu || list !== prevState.list)) {
+      const currentMenu = findMenuInfo(defaultMenu, list, 'url')
+
+      let selectedKeys = list[0] ? [list[0].id.toString()] : []
+      let openKeys = []
+
+      // 如果找到当前菜单，定位当前菜单，然后展开相关的菜单
+      if (currentMenu) {
+        let url = currentMenu.url
+        const ids = findMenuPathIds(url, list)
+        let find = false
+        openKeys = ids.reverse().map(id => {
+          const menu = findMenuInfo(id, list)
+          if (!find && !this.isFalse(menu.icon)) {
+            selectedKeys = [menu.id.toString()]
+            find = true
+          }
+          return id.toString()
+        })
+      }
+
+      return {
+        openKeys: openKeys,
+        selectedKeys: selectedKeys,
+      }
+    }
+
+    // 否则，对于state不进行任何操作
+    return null
+  }
+
   constructor(props) {
     super(props)
 
     this.state = {
       selectedKeys: [],
       openKeys: [],
+      list: null,
+      defaultMenu: null,
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.defaultMenu !== nextProps.defaultMenu) {
-      this.setState({}, () => {
-        this.setMenuKey()
-      })
-    }
-    if (nextProps.list !== this.props.list) {
-      this.setState({}, () => {
-        this.setMenuKey()
-      })
-    }
+  onAsideMaskerClick = () => {
+    const { onMaskerClick } = this.props
+    onMaskerClick && onMaskerClick(true, false)
   }
+
   // 菜单点击事件
   onMenuHandle = e => {
     try {
-      const _current = findMenuInfo(e.key, this.props.list)
+      const _current = findMenuInfo(e.key, this.state.list)
       if (_current) {
         this.props.onMenuHandle(_current.url)
       }
     } catch (e) {
-      console.error(e)
       message.error(e.msg || '系统异常')
     }
   }
@@ -55,41 +83,9 @@ class AsideView extends React.PureComponent {
   onCollapse = collapsed => {
     this.props.onCollapse(collapsed)
   }
+
   isFalse(icon) {
     return ['false', false, 0, '0'].includes(icon)
-  }
-  // 设置默认选中状态
-  setMenuKey() {
-    const { props } = this
-
-    if (!props.list) {
-      return
-    }
-
-    const currentMenu = findMenuInfo(props.defaultMenu, props.list, 'url')
-
-    let selectedKeys = props.list[0] ? [props.list[0].id.toString()] : []
-    let openKeys = []
-
-    // 如果找到当前菜单，定位当前菜单，然后展开相关的菜单
-    if (currentMenu) {
-      let url = currentMenu.url
-      const ids = findMenuPathIds(url, props.list)
-      let find = false
-      openKeys = ids.reverse().map(id => {
-        const menu = findMenuInfo(id, props.list)
-        if (!find && !this.isFalse(menu.icon)) {
-          selectedKeys = [menu.id.toString()]
-          find = true
-        }
-        return id.toString()
-      })
-    }
-
-    this.setState({
-      openKeys: openKeys,
-      selectedKeys: selectedKeys,
-    })
   }
 
   // 递归菜单
@@ -137,36 +133,44 @@ class AsideView extends React.PureComponent {
   }
 
   render() {
-    const { props } = this
+    const { breakpoint = 'lg', collapsed, screens, fixedAside } = this.props
+    const { list } = this.state
+    const siderClassName = cn('auto-sider-wrapper', {
+      breakpoint: !screens.md,
+      fixedAside: !screens.md && fixedAside,
+    })
     return (
-      <Sider
-        className="auto-sider"
-        width="256"
-        collapsedWidth="80"
-        breakpoint="xl"
-        collapsed={props.collapsed}
-        onCollapse={this.onCollapse}
-      >
-        <div className="auto-logo">
-          <img src="//carphoto.aotuzuche.com/web/images/webSystem/icon_logo.png" alt="logo" />
-          <h1>{appConfig.title}</h1>
-        </div>
-        <Menu
-          openKeys={this.state.openKeys}
-          selectedKeys={this.state.selectedKeys}
-          mode="inline"
-          theme="dark"
-          onClick={this.onMenuHandle}
-          onSelect={this.onMenuSelect}
-          onOpenChange={e => {
-            this.setState({
-              openKeys: e,
-            })
-          }}
+      <div className={siderClassName}>
+        <div className="auto-sider-wrapper-masker" onClick={this.onAsideMaskerClick} />
+        <Sider
+          className="auto-sider"
+          width="256"
+          collapsedWidth="80"
+          breakpoint={breakpoint}
+          collapsed={collapsed}
+          onCollapse={this.onCollapse}
         >
-          {this.recursionMenu(props.list)}
-        </Menu>
-      </Sider>
+          <div className="auto-logo">
+            <img src="//carphoto.aotuzuche.com/web/images/webSystem/icon_logo.png" alt="logo" />
+            <h1>{appConfig.title}</h1>
+          </div>
+          <Menu
+            openKeys={this.state.openKeys}
+            selectedKeys={this.state.selectedKeys}
+            mode="inline"
+            theme="dark"
+            onClick={this.onMenuHandle}
+            onSelect={this.onMenuSelect}
+            onOpenChange={e => {
+              this.setState({
+                openKeys: e,
+              })
+            }}
+          >
+            {this.recursionMenu(list)}
+          </Menu>
+        </Sider>
+      </div>
     )
   }
 }

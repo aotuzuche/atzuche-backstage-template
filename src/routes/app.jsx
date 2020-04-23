@@ -1,38 +1,56 @@
-import React from 'react'
 import './style.scss'
-
+import React from 'react'
+import { connect } from 'react-redux'
+import { Layout, Breadcrumb, message } from 'antd'
+import ResponsiveObserve from 'antd/lib/_util/responsiveObserve'
 import Aside from '../components/aside'
 import Header from '../components/header'
-import { Layout, Breadcrumb, message } from 'antd'
-const { Content } = Layout
 import { getMenuPathInfos, findMenuPathIds } from '../utils/menuHandles'
-import { connect } from 'react-redux'
 import appConfig from '../../appConfig'
 import Tool from '../hoc/tool'
 
+const { Content } = Layout
+
 @Tool
 class App extends React.PureComponent {
+  mediascreen = null
+
   constructor(props) {
     super(props)
 
     this.state = {
       collapsed: false,
       loading: false,
+      fixedAside: false,
+      screens: {
+        xs: true,
+        sm: true,
+        md: true,
+        lg: true,
+        xl: true,
+        xxl: true,
+      },
     }
   }
 
   async componentDidMount() {
     try {
+      this.mediascreen = ResponsiveObserve.subscribe(screens => {
+        this.setState({
+          screens,
+        })
+      })
+
       this.setState({
         loading: true,
       })
+
       // 如果已经是pathname则不需要一直请求，dev上会无限循环
       if (this.props.location.pathname === '/system/login') {
         return
       }
       await this.fetchMenu()
     } catch (e) {
-      console.error(e)
       message.error(e.msg || '系统错误，请稍后再试')
     } finally {
       this.setState({ loading: false })
@@ -46,6 +64,10 @@ class App extends React.PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    ResponsiveObserve.unsubscribe(this.mediascreen)
+  }
+
   // 菜单点击回调
   onMenuHandle = path => {
     this.props.history.push(path)
@@ -53,9 +75,10 @@ class App extends React.PureComponent {
   }
 
   // 侧边栏回调
-  onCollapse = e => {
+  onCollapse = (e, breakpoint) => {
     this.setState({
       collapsed: e,
+      fixedAside: breakpoint && !e,
     })
   }
 
@@ -85,12 +108,8 @@ class App extends React.PureComponent {
     this.updateBreadcrumb(path)
   }
 
-  go = i => () => {
-    this.props.history.go(i)
-  }
-
   // 更新面包屑
-  async updateBreadcrumb(path) {
+  updateBreadcrumb = async path => {
     const { props } = this
     const ids = findMenuPathIds(path, this.props.index.menus)
     const breadcrumb = getMenuPathInfos(ids, this.props.index.menus)
@@ -100,52 +119,65 @@ class App extends React.PureComponent {
       payload: { breadcrumb },
     })
   }
-  render(props) {
-    const { menus, breadcrumb } = this.props.index
-    const { state } = this
-    const len = breadcrumb && breadcrumb.length
-    const renderBradcrumb = e => {
-      return (
-        <Breadcrumb>
-          <Breadcrumb.Item>首页</Breadcrumb.Item>
-          {breadcrumb &&
-            breadcrumb.map((item, index) => {
-              return (
-                <Breadcrumb.Item key={item.id}>
-                  {len - 1 === index || !item.url ? (
-                    <span>{item.name}</span>
-                  ) : (
-                    <a
-                      onClick={() => {
-                        this.props.history.push(item.url)
-                      }}
-                      herf="javascript;;"
-                    >
-                      {item.name}
-                    </a>
-                  )}
-                </Breadcrumb.Item>
-              )
-            })}
-        </Breadcrumb>
-      )
-    }
 
+  onAsideMaskerClick = (collapsed, fixedAside) => {
+    this.setState({
+      collapsed,
+      fixedAside,
+    })
+  }
+
+  renderBreadcrumb = () => {
+    const {
+      index: { breadcrumb },
+    } = this.props
+    const len = breadcrumb && breadcrumb.length
+    return (
+      <Breadcrumb>
+        <Breadcrumb.Item>首页</Breadcrumb.Item>
+        {breadcrumb &&
+          breadcrumb.map((item, index) => {
+            return (
+              <Breadcrumb.Item key={item.id}>
+                {len - 1 === index || !item.url ? (
+                  <span>{item.name}</span>
+                ) : (
+                  <a
+                    onClick={() => {
+                      this.props.history.push(item.url)
+                    }}
+                    herf="javascript;;"
+                  >
+                    {item.name}
+                  </a>
+                )}
+              </Breadcrumb.Item>
+            )
+          })}
+      </Breadcrumb>
+    )
+  }
+
+  render(props) {
+    const { children, index } = this.props
+    const { collapsed, screens, fixedAside } = this.state
+    const { menus } = index
     return (
       <Layout className="auto-wrapper">
         <Aside
           list={menus}
           onMenuHandle={this.onMenuHandle}
-          collapsed={state.collapsed}
+          collapsed={collapsed}
           onCollapse={this.onCollapse}
-          defaultMenu={props.location.pathname}
+          defaultMenu={this.props.location.pathname}
+          screens={screens}
+          fixedAside={fixedAside}
+          onMaskerClick={this.onAsideMaskerClick}
         />
         <Layout>
-          <Header collapsed={state.collapsed} onCollapse={this.onCollapse} />
-
-          <div className="auto-breadcrumb">{renderBradcrumb()}</div>
-
-          <Content className="auto-mainbody">{this.props.children}</Content>
+          <Header breakpoint={!screens.md} collapsed={collapsed} onCollapse={this.onCollapse} />
+          <div className="auto-breadcrumb">{this.renderBreadcrumb()}</div>
+          <Content className="auto-mainbody">{children}</Content>
         </Layout>
       </Layout>
     )

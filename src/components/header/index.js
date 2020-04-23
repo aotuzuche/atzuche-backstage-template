@@ -2,17 +2,21 @@ import './style'
 import React from 'react'
 import { clearToken } from 'auto-libs'
 import { Layout, Icon } from 'antd'
+import cn from 'classname'
 
 class HeaderView extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    this.userInfo = localStorage['auto_system_userData']
-      ? JSON.parse(localStorage['auto_system_userData'])
-      : {}
+    try {
+      this.userInfo = localStorage['auto_system_userData']
+        ? JSON.parse(localStorage['auto_system_userData'])
+        : {}
+    } catch (e) {
+      this.userInfo = {}
+    }
 
     const name = this.userInfo.loginName ? this.userInfo.loginName : ''
-
     const now = new Date()
     const hour = now.getHours()
     let hello = ''
@@ -39,7 +43,7 @@ class HeaderView extends React.PureComponent {
     }
 
     this.state = {
-      triggerIcon: 'fold',
+      triggerIcon: 'unfold',
       loginName: name,
       hello,
     }
@@ -49,14 +53,15 @@ class HeaderView extends React.PureComponent {
     if (this.props.collapsed !== props.collapsed) {
       // eslint-disable-next-line react/no-will-update-set-state
       this.setState({
-        triggerIcon: props.collapsed ? 'unfold' : 'fold',
+        triggerIcon: props.collapsed ? 'fold' : 'unfold',
       })
     }
   }
 
   // 点击ICon菜单收起或者展开
   onTrigger = () => {
-    this.props.onCollapse && this.props.onCollapse(!this.props.collapsed)
+    const { breakpoint } = this.props
+    this.props.onCollapse && this.props.onCollapse(!this.props.collapsed, breakpoint)
   }
 
   onGoMain = () => {
@@ -71,9 +76,18 @@ class HeaderView extends React.PureComponent {
   }
 
   render() {
-    const { state } = this
+    const { state, props } = this
+    const { breakpoint } = props
+    const className = cn('auto-header-bar', {
+      breakpoint: breakpoint,
+    })
     return (
-      <Layout.Header className="auto-header-bar">
+      <Layout.Header className={className}>
+        {breakpoint && (
+          <div className="auto-header-logo">
+            <img src="https://cdn.atzuche.com/static/images/icon-logo-green.png" alt="logo" />
+          </div>
+        )}
         <Icon
           type={'menu-' + state.triggerIcon}
           onClick={this.onTrigger}

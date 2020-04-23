@@ -1,11 +1,11 @@
 .auto-wrapper {
   overflow: hidden;
   position: relative;
+  min-height: 100vh;
 }
 
 .auto-mainbody {
   padding: 24px 24px 24px 24px;
-  min-width: 1080px;
   background: #f2f3f9;
   .ant-layout {
     background: #fff;
