@@ -1,7 +1,6 @@
 import './style.scss'
 import React from 'react'
 import { connect } from 'react-redux'
-import cn from 'classname'
 import { Layout, Breadcrumb, message } from 'antd'
 import ResponsiveObserve from 'antd/lib/_util/responsiveObserve'
 import Aside from '../components/aside'
@@ -109,10 +108,6 @@ class App extends React.PureComponent {
     this.updateBreadcrumb(path)
   }
 
-  go = i => () => {
-    this.props.history.go(i)
-  }
-
   // 更新面包屑
   updateBreadcrumb = async path => {
     const { props } = this
@@ -122,6 +117,13 @@ class App extends React.PureComponent {
     props.dispatch({
       type: 'index/set',
       payload: { breadcrumb },
+    })
+  }
+
+  onAsideMaskerClick = (collapsed, fixedAside) => {
+    this.setState({
+      collapsed,
+      fixedAside,
     })
   }
 
@@ -160,22 +162,18 @@ class App extends React.PureComponent {
     const { children, index } = this.props
     const { collapsed, screens, fixedAside } = this.state
     const { menus } = index
-    const siderClassName = cn('auto-sider-wrapper', {
-      fixedAside,
-      hidden: !screens.md && !fixedAside,
-    })
     return (
       <Layout className="auto-wrapper">
-        <div className={siderClassName}>
-          <div className="auto-sider-wrapper-masker" />
-          <Aside
-            list={menus}
-            onMenuHandle={this.onMenuHandle}
-            collapsed={collapsed}
-            onCollapse={this.onCollapse}
-            defaultMenu={this.props.location.pathname}
-          />
-        </div>
+        <Aside
+          list={menus}
+          onMenuHandle={this.onMenuHandle}
+          collapsed={collapsed}
+          onCollapse={this.onCollapse}
+          defaultMenu={this.props.location.pathname}
+          screens={screens}
+          fixedAside={fixedAside}
+          onMaskerClick={this.onAsideMaskerClick}
+        />
         <Layout>
           <Header breakpoint={!screens.md} collapsed={collapsed} onCollapse={this.onCollapse} />
           <div className="auto-breadcrumb">{this.renderBreadcrumb()}</div>

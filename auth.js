@@ -37,9 +37,7 @@ async function task() {
     getResourceContent(source),
     getFunctionContent(source, ymlJsonData.function),
   ]
-  fs.outputFile(filename, result.join('\n'), function() {
-    console.log('success')
-  })
+  fs.outputFile(filename, result.join('\n'), function() {})
 }
 
 function getSystemContent(system) {
