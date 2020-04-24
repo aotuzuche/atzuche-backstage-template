@@ -1,6 +1,6 @@
 import './style'
 import React from 'react'
-import { clearToken } from 'auto-libs'
+import { clearConsoleToken } from 'auto-libs'
 import { Layout, Icon } from 'antd'
 import cn from 'classname'
 
@@ -70,7 +70,7 @@ class HeaderView extends React.PureComponent {
   }
 
   onLogout = () => {
-    clearToken()
+    clearConsoleToken()
     history.replaceState(null, '', '/system/login')
     location.reload()
   }
@@ -99,11 +99,11 @@ class HeaderView extends React.PureComponent {
             <strong>{this.state.loginName}</strong>
           </p>
           <p>
-            <a href="javascript:;" onClick={this.onGoMain}>
+            <a onClick={this.onGoMain}>
               <Icon type="appstore-o" />
               返回入口
             </a>
-            <a href="javascript:;" onClick={this.onLogout}>
+            <a onClick={this.onLogout}>
               <Icon type="poweroff" />
               退出登录
             </a>

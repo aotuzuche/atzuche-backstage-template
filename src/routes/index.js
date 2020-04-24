@@ -5,8 +5,7 @@ import { ConfigProvider } from 'antd'
 import zh_CN from 'antd/lib/locale-provider/zh_CN'
 import App from './app'
 import HomeView from '../views/home'
-
-// onlistener router
+import DevLogin from '../components/_devLogin'
 import RouteChangeListener from './routeChangeListener'
 
 // 配置路由
@@ -17,8 +16,12 @@ const Routes = e => {
         <App>
           {/* 请勿删除 */}
           <Route component={RouteChangeListener} />
-
           <Switch>
+            {/* 请勿删除，开发环境专用 */}
+            {process.env.NODE_ENV === 'development' && (
+              <Route path="/system/login" exact={true} component={DevLogin} />
+            )}
+
             <Route path="/" component={HomeView} />
             <Redirect to="/" />
           </Switch>

@@ -45,10 +45,10 @@ class App extends React.PureComponent {
         loading: true,
       })
 
-      // 如果已经是pathname则不需要一直请求，dev上会无限循环
-      if (this.props.location.pathname === '/system/login') {
-        return
-      }
+      // // 如果已经是pathname则不需要一直请求，dev上会无限循环
+      // if (this.props.location.pathname === '/system/login') {
+      //   return
+      // }
       await this.fetchMenu()
     } catch (e) {
       message.error(e.msg || '系统错误，请稍后再试')

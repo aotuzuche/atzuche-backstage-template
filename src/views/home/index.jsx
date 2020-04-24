@@ -116,7 +116,7 @@ class HomeView extends Event {
         pageNumName="page"
         rowKey="_id"
         columns={columns}
-        api="/apigateway/settlementServer/console/earnests"
+        api="/getTableListData"
         ref={table => {
           this.table = table
         }}
