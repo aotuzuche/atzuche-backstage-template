@@ -3,7 +3,6 @@ import './style.scss'
 import Event from './event'
 import { connect } from 'react-redux'
 import ATTable from 'src/components/table'
-import moment from 'moment'
 import { Layout } from 'antd'
 import ATSearchBar from 'src/components/searchBar'
 
@@ -48,62 +47,17 @@ class HomeView extends Event {
   renderTable = () => {
     const columns = [
       {
-        data: '签约主体,contractCompany',
+        data: '唯一标识,id',
       },
       {
-        data: '收款编号,receiptNumber',
-      },
-      {
-        data: '车牌号,plateCode',
-      },
-      {
-        data: '租客姓名,tenantName',
-      },
-      {
-        data: '租客手机,tenantMobile',
-      },
-      {
-        data: '金额,earnestAmount',
-      },
-      {
-        data: '实收金额,earnestPaidAmount',
-      },
-      {
-        data: '支付状态,paid',
-      },
-      {
-        data: '支付方式,payType',
-      },
-      {
-        data: '支付凭证,payOrder',
-      },
-      {
-        data: '支付时间,payTime',
-        render: e => {
-          return e ? moment(e).format('YYYY-MM-DD HH:mm:ss') : '-'
-        },
-      },
-      {
-        data: '抵扣状态,used',
-      },
-      {
-        data: '抵扣流水编号,deductionReceiptNumber',
-      },
-      {
-        data: '所属合同水编号,orderSerialNumber',
-      },
-      {
-        data: '抵扣时间,useTime',
-        render: e => {
-          return e ? moment(e).format('YYYY-MM-DD HH:mm:ss') : '-'
-        },
+        data: '名称,name',
       },
       {
         data: '操作',
         renderConsole: e => {
           return (
             <div>
-              <span>434</span>
+              <a>查看</a>
             </div>
           )
         },
@@ -111,12 +65,12 @@ class HomeView extends Event {
     ]
     return (
       <ATTable
-        listName="data"
-        pageSizeName="size"
-        pageNumName="page"
+        listName="list"
+        pageSizeName="pageSize"
+        pageNumName="pageNum"
         rowKey="_id"
         columns={columns}
-        api="/apigateway/settlementServer/console/earnests"
+        api="/demo/fetchTableList"
         ref={table => {
           this.table = table
         }}
