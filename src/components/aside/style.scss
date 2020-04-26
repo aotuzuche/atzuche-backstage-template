@@ -1,12 +1,13 @@
 .auto-sider-wrapper {
-  background-color: #001529;
-  min-height: 100vh;
+  position: relative;
 
   .auto-sider {
     width: 256px;
     min-width: 256px;
     max-width: 256px;
     flex: 0 0 256px;
+    min-height: 100%;
+    background-color: #001529;
     &.ant-layout-sider-collapsed {
       width: 80px;
       min-width: 80px;
@@ -48,9 +49,11 @@
     height: 100%;
     top: 0;
     left: 0;
+    overflow: hidden;
     .auto-sider {
       transform: translateX(-100%);
       transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
+      overflow: hidden;
     }
 
     .auto-sider-wrapper-masker {
@@ -62,18 +65,22 @@
   &.fixedAside {
     z-index: 99;
     display: block;
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     pointer-events: auto;
-
+    overflow: hidden;
     .auto-sider-wrapper-masker {
       opacity: 1;
+      pointer-events: auto;
     }
     .auto-sider {
       transform: translateX(0);
+      overflow: auto;
+      height: 100%;
+      -webkit-overflow-scrolling: touch;
     }
   }
 
