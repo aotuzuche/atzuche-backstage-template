@@ -106,7 +106,7 @@ class HeaderView extends React.PureComponent {
             <a onClick={this.onLogout}>
               <Icon type="poweroff" />
               退出登录
-            </Button>
+            </a>
           </p>
         </div>
       </Layout.Header>
