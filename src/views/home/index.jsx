@@ -77,6 +77,7 @@ class HomeView extends Event {
       />
     )
   }
+
   render() {
     return (
       <Layout>

@@ -94,7 +94,7 @@ export default class AliyunOSSUpload extends React.Component {
   }
 
   render() {
-    const { value, onChange, ticket, children, ...otherProps } = this.props
+    const { value, children, ...otherProps } = this.props
     const props = {
       name: 'file',
       fileList: value,

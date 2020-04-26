@@ -19,6 +19,7 @@ class View extends React.PureComponent {
       loading: false,
     }
   }
+
   onSubmit = e => {
     e.preventDefault()
 
@@ -62,6 +63,7 @@ class View extends React.PureComponent {
       }
     })
   }
+
   render() {
     const { getFieldDecorator } = this.props.form
     const { loading } = this.state
