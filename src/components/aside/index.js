@@ -54,6 +54,18 @@ class AsideView extends React.PureComponent {
       list: null,
       defaultMenu: null,
     }
+
+    this.maskerRef = React.createRef()
+  }
+
+  componentDidMount() {
+    this.maskerRef.current.addEventListener(
+      'touchmove',
+      e => {
+        e.preventDefault()
+      },
+      { passive: false },
+    )
   }
 
   onAsideMaskerClick = () => {
@@ -87,7 +99,7 @@ class AsideView extends React.PureComponent {
   }
 
   // 递归菜单
-  recursionMenu(obj) {
+  recursionMenu = obj => {
     if (!(obj instanceof Array)) {
       return null
     }
@@ -139,7 +151,11 @@ class AsideView extends React.PureComponent {
     })
     return (
       <div className={siderClassName}>
-        <div className="auto-sider-wrapper-masker" onClick={this.onAsideMaskerClick} />
+        <div
+          className="auto-sider-wrapper-masker"
+          onClick={this.onAsideMaskerClick}
+          ref={this.maskerRef}
+        />
         <Sider
           className="auto-sider"
           width="256"
