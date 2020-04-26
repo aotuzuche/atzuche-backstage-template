@@ -4,6 +4,7 @@ import React from 'react'
 import cn from 'classname'
 import { Layout, Menu, Icon, message } from 'antd'
 import { findMenuInfo, findMenuPathIds } from '../../utils/menuHandles'
+import { isFalse } from '../../utils/arraryHelp'
 
 const { Sider } = Layout
 const { SubMenu } = Menu
@@ -11,7 +12,6 @@ const { SubMenu } = Menu
 class AsideView extends React.PureComponent {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { defaultMenu, list } = nextProps
-
     if (list && (defaultMenu !== prevState.defaultMenu || list !== prevState.list)) {
       const currentMenu = findMenuInfo(defaultMenu, list, 'url')
 
@@ -25,7 +25,7 @@ class AsideView extends React.PureComponent {
         let find = false
         openKeys = ids.reverse().map(id => {
           const menu = findMenuInfo(id, list)
-          if (!find && !this.isFalse(menu.icon)) {
+          if (!find && !isFalse(menu.icon)) {
             selectedKeys = [menu.id.toString()]
             find = true
           }
@@ -34,6 +34,8 @@ class AsideView extends React.PureComponent {
       }
 
       return {
+        list,
+        defaultMenu,
         openKeys: openKeys,
         selectedKeys: selectedKeys,
       }
@@ -84,10 +86,6 @@ class AsideView extends React.PureComponent {
     this.props.onCollapse(collapsed)
   }
 
-  isFalse(icon) {
-    return ['false', false, 0, '0'].includes(icon)
-  }
-
   // 递归菜单
   recursionMenu(obj) {
     if (!(obj instanceof Array)) {
@@ -99,7 +97,7 @@ class AsideView extends React.PureComponent {
       if (item.children instanceof Array) {
         // 如果所有的子菜单都是隐藏形式的话
         // 就认为该菜单没有子菜单
-        hasSub = item.children.some(res => !this.isFalse(res.icon))
+        hasSub = item.children.some(res => !isFalse(res.icon))
       }
 
       if (hasSub) {
@@ -119,7 +117,7 @@ class AsideView extends React.PureComponent {
       }
 
       // 不显示隐藏形式的菜单
-      if (this.isFalse(item.icon)) {
+      if (isFalse(item.icon)) {
         return null
       }
 
