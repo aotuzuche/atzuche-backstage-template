@@ -1,7 +1,8 @@
 import './style'
 import React from 'react'
-import { Input, Form, Button, message, Spin } from 'antd'
+import { Input, Button, message, Spin } from 'antd'
 import { httpConsole, setConsoleToken } from 'auto-libs'
+import { Form } from '@ant-design/compatible'
 
 const layout = {
   labelCol: { span: 8 },

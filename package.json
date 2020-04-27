@@ -32,7 +32,7 @@
     "@ant-design/compatible": "^1.0.1",
     "@ant-design/icons": "^4.0.3",
     "antd": "^4.1.1",
-    "auto-libs": "^0.1.82",
+    "auto-libs": "^0.2.5",
     "classname": "^0.0.0",
     "core-js": "^3.6.5",
     "dva-core": "^1.4.0",
@@ -40,7 +40,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.0.2",
-    "react-router-dom": "^5.0.0"
+    "react-router-dom": "^5.0.0",
+    "react-use": "^14.2.0"
   },
   "devDependencies": {
     "autos": "^1.1.6",

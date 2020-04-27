@@ -1,5 +1,7 @@
 import React from 'react'
-import { Input, Form, Col, Row, Spin, Button, Icon, Divider, message } from 'antd'
+import { Input, Col, Row, Spin, Button, Divider, message } from 'antd'
+import { Form } from '@ant-design/compatible'
+import { SearchOutlined, UpOutlined, DownOutlined } from '@ant-design/icons'
 
 /**
  *
@@ -110,7 +112,7 @@ class ATSearchBar extends React.Component {
     return (
       <Row type="flex" justify="end" gutter={12}>
         <Col>
-          <Button type="primary" htmlType="submit" icon="search">
+          <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>
             搜索
           </Button>
         </Col>
@@ -124,9 +126,9 @@ class ATSearchBar extends React.Component {
             <Button onClick={this.toggleUpDown} type="link">
               {this.state.down ? '收起 ' : '展开 '}
               {this.state.down ? (
-                <Icon type="up" style={{ fontSize: 12 }} />
+                <UpOutlined style={{ fontSize: 12 }} />
               ) : (
-                <Icon type="down" style={{ fontSize: 12 }} />
+                <DownOutlined style={{ fontSize: 12 }} />
               )}
             </Button>
           </Col>
