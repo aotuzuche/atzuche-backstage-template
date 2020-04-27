@@ -1,7 +1,8 @@
 import React from 'react'
 import { httpConsole } from 'auto-libs'
 import './style'
-import { message, Popconfirm, Icon, Button } from 'antd'
+import { message, Popconfirm, Button } from 'antd'
+import { Icon } from '@ant-design/compatible'
 import cdn from 'src/conf/cdn'
 import classnames from 'classnames'
 

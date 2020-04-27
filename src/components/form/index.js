@@ -1,5 +1,5 @@
 import React, { useState, useEffect, isValidElement, cloneElement } from 'react'
-import { Form } from '@ant-design/compatible'
+import { Form, Icon } from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {
   Row,
@@ -8,7 +8,6 @@ import {
   Input,
   Typography,
   message,
-  Icon,
   Divider,
   Popover,
   InputNumber,

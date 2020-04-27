@@ -1,5 +1,6 @@
 import React from 'react'
-import { Upload, message, Button, Icon } from 'antd'
+import { Upload, message, Button } from 'antd'
+import { Icon } from '@ant-design/compatible'
 import { httpConsole } from 'auto-libs'
 
 /**

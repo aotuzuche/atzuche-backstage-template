@@ -1,7 +1,8 @@
 import './style'
 import React from 'react'
 import { clearConsoleToken } from 'auto-libs'
-import { Layout, Icon } from 'antd'
+import { Layout } from 'antd'
+import { Icon } from '@ant-design/compatible'
 import cn from 'classname'
 
 class HeaderView extends React.PureComponent {
