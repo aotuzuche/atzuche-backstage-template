@@ -71,7 +71,7 @@ class HomeView extends Event {
         rowKey="_id"
         columns={columns}
         api="/demo/fetchTableList"
-        ref={table => {
+        getInstance={table => {
           this.table = table
         }}
       />
