@@ -1793,22 +1793,22 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
-at-js-sdk@^2.2.2:
-  version "2.2.57"
-  resolved "https://registry.yarnpkg.com/at-js-sdk/-/at-js-sdk-2.2.57.tgz#c249c8e852131d2630ecdf88982cfade922f552c"
-  integrity sha512-kpF5N7YDtQyvO04gpjMdUXrrv0aZ679PNKtJpXRcl+6Qans4soTjW3TS4RqV5I8cyZ/pYiNcAy9cTaDsixU2iw==
+at-js-sdk@^2.2.60:
+  version "2.2.60"
+  resolved "https://registry.yarnpkg.com/at-js-sdk/-/at-js-sdk-2.2.60.tgz#a8ba9542d0912ff2040fcabb8df001e297f0bdb8"
+  integrity sha512-od9JQexjdnWX7p1kjTSQBO8GmPKu404hVBPccOkY7042L+7mpF09LnR9jGfd8p0TsiCB7/OLCfk7nbMXJQsWDg==
 
 atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-auto-libs@^0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/auto-libs/-/auto-libs-0.2.5.tgz#5f75af322a6270ea0bd761e3d1bd50553782588c"
-  integrity sha512-ZfsHLhgvh1a1FS1yID7h4X4nCNnC6Xn6lOwI5fMpym9zNW9MJwskuu4HSA+X1+KKA8xTV1vSuWyZ3w+E2DlkoA==
+auto-libs@^0.2.20:
+  version "0.2.20"
+  resolved "https://registry.yarnpkg.com/auto-libs/-/auto-libs-0.2.20.tgz#2bbe2d291509f7fa87e5d4e65d01081a1939e054"
+  integrity sha512-YOEswKYkPaXwlOY9ULSYB9E9WBBh5zbo5HhDompOdncuN+dKfZlZHmnqaV/vKffaeF/h9rOqYRM3zuq9fCq4BA==
   dependencies:
-    at-js-sdk "^2.2.2"
+    at-js-sdk "^2.2.60"
     axios "^0.18.0"
     js-cookie "^2.2.0"
     qs "^6.5.2"
