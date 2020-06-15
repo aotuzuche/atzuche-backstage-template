@@ -43,7 +43,7 @@
     "react-use": "^14.2.0"
   },
   "devDependencies": {
-    "autos": "^1.1.6",
+    "autos": "^3.0.0",
     "babel-eslint": "^10.0.1",
     "babel-preset-atzuche": "^0.1.0",
     "eslint": "^6.7.2",
