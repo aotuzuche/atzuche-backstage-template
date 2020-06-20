@@ -167,6 +167,7 @@ const App: FC = ({ children }) => {
         screens={screens}
         fixedAside={fixedAside}
         onMaskerClick={onAsideMaskerClick}
+        title={appConfig.title}
       />
       <Layout>
         <Header breakpoint={!screens.md} collapsed={collapsed} onCollapse={onCollapse} />
