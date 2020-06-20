@@ -13,7 +13,7 @@
     "lint": "eslint . --ext .js,.jsx",
     "format": "prettier --write src/**/*.{js,jsx}",
     "auth": "node ./auth.js",
-    "eslint": "eslint src --ext .js,.jsx --fix",
+    "eslint": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
     "prettier": "prettier -c --write '**/*'"
   },
   "husky": {
@@ -22,15 +22,15 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx}": [
+    "*.{js,jsx,ts,tsx}": [
       "prettier --write",
       "eslint --fix"
     ]
   },
   "dependencies": {
-    "@ant-design/compatible": "^1.0.1",
     "@ant-design/icons": "^4.1.0",
     "antd": "^4.1.1",
+    "at-console-components": "^1.0.5",
     "auto-libs": "^0.2.5",
     "classname": "^0.0.0",
     "core-js": "^3.6.5",
@@ -39,13 +39,20 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.0.2",
-    "react-router-dom": "^5.0.0",
+    "react-router-dom": "^5.2.0",
     "react-use": "^14.2.0"
   },
   "devDependencies": {
-    "autos": "^1.1.6",
+    "@types/dva": "^1.1.0",
+    "@types/mockjs": "^1.0.2",
+    "@types/react": "^16.9.38",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/webpack-env": "^1.15.2",
+    "autos": "^3.0.3",
     "babel-eslint": "^10.0.1",
-    "babel-preset-atzuche": "^0.1.0",
+    "babel-preset-atzuche": "^0.2.0",
     "eslint": "^6.7.2",
     "eslint-config-atzuche": "^0.0.24",
     "fs-extra": "^8.1.0",
