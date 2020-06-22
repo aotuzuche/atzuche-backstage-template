@@ -8,7 +8,7 @@ import HomeView from '../views/home'
 import RouteChangeListener from './routeChangeListener'
 import { DevLogin } from 'at-console-components'
 
-const Routes: FC = e => {
+const Routes: FC = () => {
   return (
     <BrowserRouter basename={appConfig.basename}>
       <ConfigProvider locale={zh_CN}>
