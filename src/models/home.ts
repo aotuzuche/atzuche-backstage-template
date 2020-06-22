@@ -1,4 +1,6 @@
-export default {
+import { Model } from 'dva'
+
+const home: Model = {
   namespace: 'home',
   state: [],
   reducers: {
@@ -7,3 +9,5 @@ export default {
     },
   },
 }
+
+export default home

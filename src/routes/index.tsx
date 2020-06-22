@@ -1,15 +1,14 @@
-import React from 'react'
+import React, { FC } from 'react'
 import appConfig from '../../appConfig'
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
 import zh_CN from 'antd/lib/locale-provider/zh_CN'
 import App from './app'
 import HomeView from '../views/home'
-import DevLogin from '../components/_devLogin'
 import RouteChangeListener from './routeChangeListener'
+import { DevLogin } from 'at-console-components'
 
-// 配置路由
-const Routes = e => {
+const Routes: FC = e => {
   return (
     <BrowserRouter basename={appConfig.basename}>
       <ConfigProvider locale={zh_CN}>

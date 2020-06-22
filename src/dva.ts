@@ -1,14 +1,14 @@
 import { create } from 'dva-core'
 
-let app
-let store
+let app: any
+let store: any
 let dispatch
 
-function createApp(opt) {
+function createApp(opt: any) {
   app = create(opt)
 
   if (!global.registered) {
-    opt.models.forEach(model => app.model(model))
+    opt.models.forEach((model: any) => app.model(model))
   }
   global.registered = true
 
