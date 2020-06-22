@@ -4222,10 +4222,10 @@ eslint-config-alloy@^3.6.0:
   resolved "https://registry.yarnpkg.com/eslint-config-alloy/-/eslint-config-alloy-3.7.1.tgz#315de2151c6870a207558c290f369333900d413a"
   integrity sha512-pmEBnWDQ46INOx/y41UtEctwZddGA0UDWLBBTyNFsxZnElTEiWkGlupKxjKQb32XDMJx07WAlK2PztBr631dNQ==
 
-eslint-config-atzuche@^0.0.24:
-  version "0.0.24"
-  resolved "https://registry.yarnpkg.com/eslint-config-atzuche/-/eslint-config-atzuche-0.0.24.tgz#f98ff93d59d8f7fcf0c7960038ecf6c81f40ad49"
-  integrity sha512-jp1teZsCFpk/13TOB0Cb6nmUWktaLgfya4nYIEXWPGCzNEnMuuX5hOorCRsFgwg4MiNl0AmUT6uVbnhlRVAa6Q==
+eslint-config-atzuche@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-atzuche/-/eslint-config-atzuche-1.0.2.tgz#72109b85ad0aeb3a1c6ed39f53fd71ea4c371a9b"
+  integrity sha512-ZyZHKGmSaVmgvyZfXb6xjHquVcBjw4OuMTspAkJ69Q8PHvNsm4hzsJBjjDUutz9yJrY9xqf6ahCI6Dk7jXiSQw==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^2.22.0"
     "@typescript-eslint/parser" "^2.22.0"
