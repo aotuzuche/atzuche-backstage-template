@@ -37,7 +37,7 @@ async function task() {
     getResourceContent(source),
     getFunctionContent(source, ymlJsonData.function),
   ]
-  fs.outputFile(filename, result.join('\n'), function() {})
+  fs.outputFile(filename, result.join('\n'), function () {})
 }
 
 function getSystemContent(system) {
@@ -149,14 +149,14 @@ async function fileList(filePath) {
 
 function readDir(filePath) {
   return new Promise((resolve, reject) => {
-    fs.readdir(filePath, function(err, files) {
+    fs.readdir(filePath, function (err, files) {
       if (err) {
         reject(err)
       } else {
         const results = []
         const queue = []
         // 遍历读取到的文件列表
-        files.forEach(function(filename) {
+        files.forEach(function (filename) {
           // 获取当前文件的绝对路径
           const filedir = path.join(filePath, filename)
           // 根据文件路径获取文件信息，返回一个fs.Stats对象
