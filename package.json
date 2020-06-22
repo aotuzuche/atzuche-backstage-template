@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
-    "antd": "^4.1.1",
+    "antd": "^4.3.5",
     "at-console-components": "^1.0.5",
     "auto-libs": "^0.2.5",
     "classname": "^0.0.0",
