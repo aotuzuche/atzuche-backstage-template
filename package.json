@@ -10,9 +10,11 @@
     "dev": "autos dev",
     "test": "autos build -t",
     "analyzer": "autos build -t --analyzer",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint": "yarn eslint && yarn lint:tsc",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx}",
-    "auth": "node ./auth.js"
+    "auth": "node ./auth.js",
+    "eslint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:tsc": "tsc --noEmit"
   },
   "husky": {
     "hooks": {
