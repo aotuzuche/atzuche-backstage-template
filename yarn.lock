@@ -2009,10 +2009,10 @@ autoprefixer@^9.6.1, autoprefixer@^9.7.4:
     postcss "^7.0.30"
     postcss-value-parser "^4.1.0"
 
-autos@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/autos/-/autos-3.0.4.tgz#2f04261516c72989fd19fdfe3b87fb3c3dd442e6"
-  integrity sha512-EldSOfA5W37FI0beEZ7PqglUCqcKHAkAHJry/q4ECcvN/EPQe4D//NksDltR0a5ffllPUvyYedcMS/NpRZvAkg==
+autos@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/autos/-/autos-3.0.5.tgz#955ed0e0ecfb54dff3757a51cc3163733df5d61f"
+  integrity sha512-Ab89Zlz/3++CBT7NnHvz6tpfy3xovGtJUJs2G23vp+6xtHz4QdX4dwGZmRl8SR6NUU+8MScFBvnrN8DWRaOzmA==
   dependencies:
     "@babel/core" "^7.8.4"
     "@pmmmwh/react-refresh-webpack-plugin" "^0.4.0-beta.4"
