@@ -19,7 +19,7 @@ interface AppState {
 }
 
 const App: FC = ({ children }) => {
-  const mediascreen = useRef<string>()
+  const mediascreen = useRef<number>()
   const dispatch = useDispatch()
   const location = useLocation()
   const history = useHistory()
