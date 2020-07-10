@@ -1985,10 +1985,10 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-auto-libs@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/auto-libs/-/auto-libs-0.3.0.tgz#d83b4362d975998ca09a2bffb70d221d1150adb3"
-  integrity sha512-rROjUqt9QGZB/TSBA2xn78E70xWbrak8OBFy74ARI/Xhw7QLBqOJW3N8c7qBbGgtenrtFkblUsEfiAXbw/d5FQ==
+auto-libs@^0.3.0, auto-libs@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/auto-libs/-/auto-libs-0.3.1.tgz#b2330028d7d13cc8686a0a3265a62868ccfe6401"
+  integrity sha512-cbS+OAdOJ+MMr04radYBUd8ats1IkpLMCUcsserdahzysftb2r/iFhwCqlUXq4v2XpC06GbHh/0PjrU0E8itVg==
   dependencies:
     at-js-sdk "^2.2.60"
     axios "^0.18.0"
