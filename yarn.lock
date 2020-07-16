@@ -1959,10 +1959,10 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
-at-console-components@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/at-console-components/-/at-console-components-1.3.1.tgz#39d163dd79b1cb3919dc251b1611a1253796dd48"
-  integrity sha512-4OErYdxK4i/3W9zS0eFGi4FVzm4LOqEvYTqRjl811RhKE7BdtZ9aZJ5rsioGp9SMLl83lJiEAUNzv+u9AxY1SQ==
+at-console-components@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/at-console-components/-/at-console-components-1.3.2.tgz#7c92857dd18af1bfe4e7b24fddceb700117decba"
+  integrity sha512-ztzqmk/aOFXF1gv1uPf5TorGPac/E99vcZ1Fe/qgb33IoKsBv4mykQpCziLEs/TyRaPUzxZpvSDjO7dIEehKsQ==
   dependencies:
     "@ant-design/compatible" "^1.0.2"
     "@ant-design/icons" "^4.0.6"
