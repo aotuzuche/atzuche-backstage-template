@@ -2,10 +2,24 @@
   overflow: hidden;
   position: relative;
   min-height: 100vh;
+  display: flex;
+  padding-left: 256px;
+  transition: all 0.3s ease-in-out;
+  &.auto-wrapper--breakpoint {
+    padding-left: 0 !important;
+  }
+
+  &.auto-wrapper--collapsed {
+    padding-left: 80px;
+  }
+
+  > .ant-layout {
+    flex: 1;
+  }
 }
 
 .auto-mainbody {
-  padding: 24px 24px 24px 24px;
+  padding: 10px;
   background: #f2f3f9;
   position: relative;
   .ant-layout {

@@ -8,6 +8,7 @@ import { Header, Aside } from 'at-console-components'
 import { useSetState, useLocation } from 'react-use'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import cn from 'classnames'
 
 const { Content } = Layout
 
@@ -77,8 +78,6 @@ const App: FC = ({ children }) => {
       // }
       await fetchMenu()
     } catch (error) {
-      console.log(123, error)
-
       message.error(error.msg)
     } finally {
       setState({
@@ -156,8 +155,12 @@ const App: FC = ({ children }) => {
 
   const { collapsed, screens, fixedAside } = state
 
+  const classname = cn('auto-wrapper', {
+    'auto-wrapper--collapsed': collapsed,
+    'auto-wrapper--breakpoint': !screens.md,
+  })
   return (
-    <Layout className="auto-wrapper">
+    <Layout className={classname}>
       <Aside
         list={menus}
         onMenuHandle={onMenuHandle}
@@ -168,6 +171,7 @@ const App: FC = ({ children }) => {
         fixedAside={fixedAside}
         onMaskerClick={onAsideMaskerClick}
         title={appConfig.title}
+        theme="light"
       />
       <Layout>
         <Header breakpoint={!screens.md} collapsed={collapsed} onCollapse={onCollapse} />
