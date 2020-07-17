@@ -1990,10 +1990,10 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-auto-libs@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/auto-libs/-/auto-libs-0.3.0.tgz#d83b4362d975998ca09a2bffb70d221d1150adb3"
-  integrity sha512-rROjUqt9QGZB/TSBA2xn78E70xWbrak8OBFy74ARI/Xhw7QLBqOJW3N8c7qBbGgtenrtFkblUsEfiAXbw/d5FQ==
+auto-libs@^0.3.0, auto-libs@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/auto-libs/-/auto-libs-0.3.3.tgz#4c7f4d518bc9180a9011a7d18d05d15c193c5aff"
+  integrity sha512-7pef5pX8iNZwTs35+6yb++XI/SpnC97CDACwpWn20W/ZHUbaWqZb6WmsAqcDMO1/WCrMDvXvCLgAIr2rPHdvgw==
   dependencies:
     at-js-sdk "^2.2.60"
     axios "^0.18.0"
@@ -6736,11 +6736,6 @@ lodash.upperfirst@^4.3.1:
 lodash@^4.0.0, lodash@^4.16.5, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@~4.17.12:
   version "4.17.19"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
-  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
-
-lodash@^4.17.19:
-  version "4.17.19"
-  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
   integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-symbols@^3.0.0:
