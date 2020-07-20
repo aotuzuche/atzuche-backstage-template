@@ -1964,10 +1964,10 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
-at-console-components@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.npmjs.org/at-console-components/-/at-console-components-1.3.4.tgz#9929ac8919bc521d0c9c7976cd20a6a35a2810b8"
-  integrity sha512-EzoQUNqtk0YASVk98tIPTZw/k9ighmQf2ixtx/mkbO/FFTstjmIZyI+QKXNIJDkOFbYe0wj42Ebo8IdNsz6vSQ==
+at-console-components@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/at-console-components/-/at-console-components-1.4.0.tgz#cffc110212316c48c2128b78e8ff5c76e2428a99"
+  integrity sha512-PiMLpgUobEf692hPCAxFreQzbUbR5r9ZGP+LN+eUTDl5JDuPfIymWnPhhDFdJp9SR37TTsnQyJt1Z9eE75A9TA==
   dependencies:
     "@ant-design/compatible" "^1.0.2"
     "@ant-design/icons" "^4.0.6"
@@ -6736,11 +6736,6 @@ lodash.upperfirst@^4.3.1:
 lodash@^4.0.0, lodash@^4.16.5, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@~4.17.12:
   version "4.17.19"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
-  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
-
-lodash@^4.17.19:
-  version "4.17.19"
-  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
   integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-symbols@^3.0.0:
