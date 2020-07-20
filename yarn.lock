@@ -4207,10 +4207,10 @@ eslint-config-alloy@^3.6.0:
   resolved "https://registry.yarnpkg.com/eslint-config-alloy/-/eslint-config-alloy-3.7.1.tgz#315de2151c6870a207558c290f369333900d413a"
   integrity sha512-pmEBnWDQ46INOx/y41UtEctwZddGA0UDWLBBTyNFsxZnElTEiWkGlupKxjKQb32XDMJx07WAlK2PztBr631dNQ==
 
-eslint-config-atzuche@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/eslint-config-atzuche/-/eslint-config-atzuche-1.0.2.tgz#72109b85ad0aeb3a1c6ed39f53fd71ea4c371a9b"
-  integrity sha512-ZyZHKGmSaVmgvyZfXb6xjHquVcBjw4OuMTspAkJ69Q8PHvNsm4hzsJBjjDUutz9yJrY9xqf6ahCI6Dk7jXiSQw==
+eslint-config-atzuche@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/eslint-config-atzuche/-/eslint-config-atzuche-1.0.3.tgz#363ae2b0060e7f7f87f2e6aa04d02e30a2312339"
+  integrity sha512-l2+xkLEMn7lVIaNv0gzMmVX6Q687C84Heediaq6vMPmKtqZPnaxwFhKUxKxWIFK/YMuZNwQEVTzP0DIR9nIrLg==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^2.22.0"
     "@typescript-eslint/parser" "^2.22.0"
@@ -6736,11 +6736,6 @@ lodash.upperfirst@^4.3.1:
 lodash@^4.0.0, lodash@^4.16.5, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@~4.17.12:
   version "4.17.19"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
-  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
-
-lodash@^4.17.19:
-  version "4.17.19"
-  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
   integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-symbols@^3.0.0:
