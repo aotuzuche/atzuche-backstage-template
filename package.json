@@ -14,7 +14,8 @@
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx}",
     "auth": "node ./auth.js",
     "eslint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:tsc": "tsc --noEmit"
+    "lint:tsc": "tsc --noEmit",
+    "update": "autos update"
   },
   "husky": {
     "hooks": {
