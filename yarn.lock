@@ -1933,10 +1933,10 @@ async@^2.6.2:
   dependencies:
     lodash "^4.17.14"
 
-at-console-components@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/at-console-components/-/at-console-components-1.5.1.tgz#0aba61253cc2066f355668682c3c8c03aa055956"
-  integrity sha512-bEKzXJu56BbL9Hm0PxVJd6roXPegNtAxUliWYhUnM80uOQtzHHQg+e3PedJHFJOO5oJJVFKXoj4HCZ75g6E2UA==
+at-console-components@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/at-console-components/-/at-console-components-1.6.1.tgz#b71c595c3f4390361141d0dfe5ec1556e14e4310"
+  integrity sha512-O7auUztC5v/SHR449szJ6iZ/h23dTzZ2383gt2cfRjRys9HwLEKh5+h40yWu6qtFr3UVpv89+JpK3sc79rg9KQ==
   dependencies:
     "@ant-design/compatible" "^1.0.2"
     "@ant-design/icons" "^4.0.6"
