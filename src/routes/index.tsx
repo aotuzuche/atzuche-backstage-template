@@ -3,16 +3,15 @@ import appConfig from '../../appConfig'
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
 import zh_CN from 'antd/lib/locale-provider/zh_CN'
-import App from './app'
 import HomeView from '../views/home'
 import RouteChangeListener from './routeChangeListener'
-import { DevLogin } from 'at-console-components'
+import { DevLogin, Wrapper } from 'at-console-components'
 
 const Routes: FC = () => {
   return (
     <BrowserRouter basename={appConfig.basename}>
       <ConfigProvider locale={zh_CN}>
-        <App>
+        <Wrapper title={appConfig.title} systemCode={appConfig.syscode}>
           {/* 请勿删除 */}
           <Route component={RouteChangeListener} />
           <Switch>
@@ -24,7 +23,7 @@ const Routes: FC = () => {
             <Route path="/" component={HomeView} />
             <Redirect to="/" />
           </Switch>
-        </App>
+        </Wrapper>
       </ConfigProvider>
     </BrowserRouter>
   )
