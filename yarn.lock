@@ -1950,10 +1950,10 @@ async@^2.6.2:
   dependencies:
     lodash "^4.17.14"
 
-at-console-components@^1.6.3:
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/at-console-components/-/at-console-components-1.6.3.tgz#ddcda4f0aefd8015ce140b8a882653aaf2ed2b5d"
-  integrity sha512-yyN68Vlcc9V4B69EQndS26MR4768BCAI8fUpsuepTFkzNBro7mQ4HXCS5SeOMBWoMpoHN0doJ+KfJ4nErdf3eQ==
+at-console-components@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/at-console-components/-/at-console-components-1.7.1.tgz#08d7267fdd4f898728ed39b0edb62b6d55e5c20e"
+  integrity sha512-DCKlJEL6QX9uAQbwit/uDmkIRcNbZZ7gURvuzPkBvgZRLWbrMeuB+HEQTi8nRW4Jl1WOg0NF82U0Jw9Pc3ECYw==
   dependencies:
     "@ant-design/compatible" "^1.0.2"
     "@ant-design/icons" "^4.0.6"
