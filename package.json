@@ -32,7 +32,7 @@
     "@ant-design/icons": "^4.1.0",
     "antd": "^4.6.4",
     "at-console-components": "^1.7.1",
-    "auto-libs": "^0.3.3",
+    "auto-libs": "^0.3.7",
     "classname": "^0.0.0",
     "classnames": "^2.2.6",
     "core-js": "^3.6.5",
