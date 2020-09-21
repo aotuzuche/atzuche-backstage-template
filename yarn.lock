@@ -4405,10 +4405,10 @@ eslint-config-alloy@^3.7.4:
   resolved "https://registry.yarnpkg.com/eslint-config-alloy/-/eslint-config-alloy-3.7.4.tgz#bb61fe25c9aa939029a3aa36302d8e22762d2fca"
   integrity sha512-NGK5mr4mpsky5pEfMIxK/x6dFzOWW72KQ0S4vzIWasZvAfoU++8T4SAqmKOD/LfUO5zQGbZb6CEpXY0N/9ndKA==
 
-eslint-config-atzuche@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-atzuche/-/eslint-config-atzuche-2.0.0.tgz#de4afe2b509f36a5522cedbe3e4ab4d18cdb1476"
-  integrity sha512-VAi9N1a3/rdHvInTyaWB2myfJlqdJ59QPKYOY/FuAkAXSn1ZJO/6LzhdWJBeGhfAWcHWNVnwWROwMB/dJPbLIw==
+eslint-config-atzuche@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-atzuche/-/eslint-config-atzuche-2.0.1.tgz#1cca8b479cfbfe403c95e230c21b3ea5ddb41f98"
+  integrity sha512-Jb9E0ExRgVNAm8Rtho+pmZmxXJxAOQqL0Yxxjoca9LTkCdaT3V8aJ0fT2iR37VxqOfMdmwodsRvtim+vmxdl6A==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^3.7.0"
     "@typescript-eslint/parser" "^3.7.0"
@@ -4416,7 +4416,7 @@ eslint-config-atzuche@^2.0.0:
     eslint-config-alloy "^3.7.4"
     eslint-config-prettier "^6.11.0"
     eslint-plugin-prettier "^3.1.4"
-    eslint-plugin-react "^7.20.3"
+    eslint-plugin-react "^7.20.4"
     eslint-plugin-react-hooks "^4.0.8"
 
 eslint-config-prettier@^6.11.0:
@@ -4449,10 +4449,10 @@ eslint-plugin-react-hooks@^4.0.8:
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.0.8.tgz#a9b1e3d57475ccd18276882eff3d6cba00da7a56"
   integrity sha512-6SSb5AiMCPd8FDJrzah+Z4F44P2CdOaK026cXFV+o/xSRzfOiV1FNFeLl2z6xm3yqWOQEZ5OfVgiec90qV2xrQ==
 
-eslint-plugin-react@^7.20.3:
-  version "7.20.3"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.20.3.tgz#0590525e7eb83890ce71f73c2cf836284ad8c2f1"
-  integrity sha512-txbo090buDeyV0ugF3YMWrzLIUqpYTsWSDZV9xLSmExE1P/Kmgg9++PD931r+KEWS66O1c9R4srLVVHmeHpoAg==
+eslint-plugin-react@^7.20.4:
+  version "7.20.6"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.20.6.tgz#4d7845311a93c463493ccfa0a19c9c5d0fd69f60"
+  integrity sha512-kidMTE5HAEBSLu23CUDvj8dc3LdBU0ri1scwHBZjI41oDv4tjsWZKU7MQccFzH1QYPYhsnTF2ovh7JlcIcmxgg==
   dependencies:
     array-includes "^3.1.1"
     array.prototype.flatmap "^1.2.3"
