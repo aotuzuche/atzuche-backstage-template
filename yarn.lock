@@ -2149,10 +2149,10 @@ async@^2.6.2:
   dependencies:
     lodash "^4.17.14"
 
-at-console-components@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/at-console-components/-/at-console-components-1.7.1.tgz#08d7267fdd4f898728ed39b0edb62b6d55e5c20e"
-  integrity sha512-DCKlJEL6QX9uAQbwit/uDmkIRcNbZZ7gURvuzPkBvgZRLWbrMeuB+HEQTi8nRW4Jl1WOg0NF82U0Jw9Pc3ECYw==
+at-console-components@^1.9.5:
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/at-console-components/-/at-console-components-1.9.5.tgz#0d186cabda02ec0fd9cd98cc1a439884768a379c"
+  integrity sha512-qFwC1IQzE3KYL0/hLE8Fl1jNsT6N6TW65HH7REkvRcNKM05bGQu9R0vfYiy9uJrise5k2e5MubR0gvJKrCsd+g==
   dependencies:
     "@ant-design/compatible" "^1.0.2"
     "@ant-design/icons" "^4.0.6"
