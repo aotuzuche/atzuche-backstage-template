@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
-    "antd": "^4.7.2",
+    "antd": "^4.7.3",
     "at-console-components": "^1.9.6",
     "auto-libs": "^0.3.8",
     "classname": "^0.0.0",
