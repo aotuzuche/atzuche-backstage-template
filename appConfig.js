@@ -21,4 +21,8 @@ module.exports = {
   title: '<%= projectName %>',
 
   isSystem: true,
+
+  autoLogin: true,
+
+  mfe: true,
 }

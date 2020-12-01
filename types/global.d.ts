@@ -11,6 +11,7 @@ declare global {
   }
   interface Window {
     AppListenerRouteChange: any
+    SYSCODE: string
   }
 }
 
