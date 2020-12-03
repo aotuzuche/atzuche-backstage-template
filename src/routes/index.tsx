@@ -1,15 +1,17 @@
 import React, { FC } from 'react'
-import appConfig from '../../appConfig'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import HomeView from '../views/home'
+import { ConfigProvider } from 'antd'
+import zh_CN from 'antd/lib/locale-provider/zh_CN'
 
 const Routes: FC = () => {
   return (
-    <BrowserRouter basename={appConfig.basename}>
+    <ConfigProvider locale={zh_CN}>
       <Switch>
-        <Route path="/" component={HomeView} />
+        <Route path="/<%= prodPath %>" component={HomeView} exact />
+        <Redirect to="/<%= prodPath %>" />
       </Switch>
-    </BrowserRouter>
+    </ConfigProvider>
   )
 }
 
