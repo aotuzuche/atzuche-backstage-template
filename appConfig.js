@@ -17,9 +17,6 @@ module.exports = {
   // 本地代理环境地址
   target: 'http://test1-web.autozuche.com/',
 
-  // html 文档的标题
-  title: '<%= projectName %>',
-
   isSystem: true,
 
   autoLogin: true,
