@@ -9,7 +9,7 @@ const Routes: FC = () => {
     <ConfigProvider locale={zh_CN}>
       <Switch>
         <Route path="/<%= prodPath %>" component={HomeView} exact />
-        <Redirect to="/<%= prodPath %>" />
+        <Redirect to="/<%= prodPath %>" from="/<%= prodPath %>" />
       </Switch>
     </ConfigProvider>
   )
