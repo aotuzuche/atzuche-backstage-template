@@ -2280,10 +2280,10 @@ at-console-components@^1.9.17:
     classnames "^2.2.6"
     lodash "^4.17.19"
 
-at-js-sdk@^2.2.60:
-  version "2.2.60"
-  resolved "https://registry.yarnpkg.com/at-js-sdk/-/at-js-sdk-2.2.60.tgz#a8ba9542d0912ff2040fcabb8df001e297f0bdb8"
-  integrity sha512-od9JQexjdnWX7p1kjTSQBO8GmPKu404hVBPccOkY7042L+7mpF09LnR9jGfd8p0TsiCB7/OLCfk7nbMXJQsWDg==
+at-js-bridge@^1.0.22:
+  version "1.0.27"
+  resolved "https://registry.yarnpkg.com/at-js-bridge/-/at-js-bridge-1.0.27.tgz#4882097c383852428f84f72d7637215d29b65b53"
+  integrity sha512-HztRgbWbrrXpizTNmWbR35HtCB751CCgT8nxAdO8WTTR9UjPgwyeeA3rWH2oVrfiJ4LWOhEKFV6yquY/nsfIAg==
 
 at-least-node@^1.0.0:
   version "1.0.0"
@@ -2295,12 +2295,12 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-auto-libs@^0.3.0, auto-libs@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/auto-libs/-/auto-libs-0.3.8.tgz#0036076a4dfef082acb0d32c9d250026b5029b65"
-  integrity sha512-j370xB9IN3NCpmVxDYK5U91bcrsxT7EkGALMYSHTv8IRVXIvRv09Oo0mVf+hZmqDpqMyOAGMtCgiHVVeW+/IQw==
+auto-libs@^0.3.0, auto-libs@^0.3.22:
+  version "0.3.22"
+  resolved "https://registry.yarnpkg.com/auto-libs/-/auto-libs-0.3.22.tgz#f7f6207745bbd96b3fe04d0750b2552b70903e66"
+  integrity sha512-R6KoIu6F4b1tr2HUpUstlBIUDscZ8XoHIn2meVvzcCFzP/Aj7AOs8gmjd5TxnLTmK4nW5PDf3HPSyaiHn+HBAQ==
   dependencies:
-    at-js-sdk "^2.2.60"
+    at-js-bridge "^1.0.22"
     axios "^0.18.0"
     js-cookie "^2.2.0"
     qs "^6.5.2"
