@@ -55,7 +55,7 @@
     "autos": "^4.2.10",
     "babel-eslint": "^10.0.1",
     "babel-preset-atzuche": "^0.5.0",
-    "eslint": "^7.9.0",
+    "eslint": "^7.17.0",
     "eslint-config-atzuche": "^2.0.1",
     "fs-extra": "^9.0.1",
     "husky": "^4.3.0",
