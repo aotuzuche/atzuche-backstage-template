@@ -1955,10 +1955,10 @@ autoprefixer@^10.0.2:
     normalize-range "^0.1.2"
     postcss-value-parser "^4.1.0"
 
-autos@^4.2.10:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/autos/-/autos-4.4.0.tgz#9585f83ece8fe020d87c3d2c4948a31553c8d5b6"
-  integrity sha512-wdnKMLV9mC7a4qADIoDLoD3x9BNZFYzF4GFgQRy30y9kIIdv6sJal9e0Rnn8aQ6gDkn6QN9wxLePws1jPMdISw==
+autos@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/autos/-/autos-4.4.1.tgz#b1f718d537339239742a569a02198d3054dfa66e"
+  integrity sha512-iTBfByoltrEcGtrDl3Rz7JTft3VFQWtukhMJR7YFmlH2JAWQ8jd9hmZuYeps/mmiP0+dCcEsFnm2Vo5+22FHkg==
   dependencies:
     "@babel/core" "^7.12.3"
     "@pmmmwh/react-refresh-webpack-plugin" "^0.4.3"
