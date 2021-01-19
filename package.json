@@ -29,7 +29,7 @@
     ]
   },
   "dependencies": {
-    "@ant-design/icons": "^4.3.0",
+    "@ant-design/icons": "^4.4.0",
     "antd": "^4.9.1",
     "at-console-components": "^1.9.17",
     "auto-libs": "^0.3.22",
